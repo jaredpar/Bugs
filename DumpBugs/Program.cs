@@ -27,14 +27,15 @@ namespace DumpBugs
                 var repo = await client.Repository.Get("dotnet", "roslyn");
                 var issueQuery = GetIssueQuery();
                 var list = await queryUtil.GetIssues(repo, issueQuery);
-                var filtered = list.Where(x => x.Labels.Any(l => l.Name == "Bug" || l.Name == "Feature Request"));
+                var filtered = list.Where(x => IsMatchingLabels(x.Labels));
 
-                using (var stream = File.Open(@"c:\users\jaredpar\issues.csv", FileMode.Create))
+                using (var stream = File.Open(@"c:\users\jaredpar\Documents\issues.csv", FileMode.Create))
                 using (var textWriter = new StreamWriter(stream))
                 {
+                    textWriter.WriteLine("Milestone,Assignee,Count,Url");
                     foreach (var issue in filtered)
                     {
-                        textWriter.WriteLine($"{issue.Milestone.Title},{issue.Assignee.Login},{issue.Url}");
+                        textWriter.WriteLine($"{issue.Milestone.Title},{issue.Assignee.Login},1,{issue.Url}");
                     }
                 }
 
@@ -45,6 +46,19 @@ namespace DumpBugs
                 Console.Write($"{ex.Message}");
                 return 1;
             }
+        }
+
+        private static bool IsMatchingLabels(IEnumerable<Label> labels)
+        {
+            foreach (var label in labels)
+            {
+                if (label.Name == "Documentation" || label.Name == "Test")
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         private static Credentials ReadCredentials()
@@ -90,4 +104,5 @@ namespace DumpBugs
             Milestones = milestones.ToImmutableArray();
         }
     }
+
 }
