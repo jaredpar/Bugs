@@ -5,20 +5,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DumpBugs
+namespace TheBugs
 {
-    internal sealed class QueryUtil
+    public sealed class QueryUtil
     {
         internal const int DefaultPageSize = 50;
 
         private readonly GitHubClient _client;
 
-        internal QueryUtil(GitHubClient client)
+        public QueryUtil(GitHubClient client)
         {
             _client = client;
         }
 
-        internal async Task<List<Issue>> GetIssues(Repository repo, IssueQuery query)
+        public async Task<List<Issue>> GetIssues(Repository repo, IssueQuery query)
         {
             // TODO: need to handle unassigned bugs too. 
 
@@ -39,22 +39,37 @@ namespace DumpBugs
             return list;
         }
 
-        internal async Task<Milestone> GetMilestone(Repository repo, string title)
+        public async Task<List<Issue>> GetIssuesInMilestone(Repository repo, string milestoneTitle)
+        {
+            var milestone = await GetMilestone(repo, milestoneTitle);
+            var request = new RepositoryIssueRequest();
+            request.Milestone = $"{milestone.Number}";
+            return await GetIssues(repo, request);
+        }
+
+        public async Task<List<Issue>> GetIssuesWithLabel(Repository repo, string label)
+        {
+            var request = new RepositoryIssueRequest();
+            request.Labels.Add(label);
+            return await GetIssues(repo, request);
+        }
+
+        public async Task<Milestone> GetMilestone(Repository repo, string milestoneTitle)
         {
             var all = await _client.Issue.Milestone.GetAllForRepository(repo.Id);
             var comparer = StringComparer.OrdinalIgnoreCase;
             foreach (var item in all)
             {
-                if (comparer.Equals(item.Title, title))
+                if (comparer.Equals(item.Title, milestoneTitle))
                 {
                     return item;
                 }
             }
 
-            throw new Exception($"Unable to find milestone with title {title}");
+            throw new Exception($"Unable to find milestone with title {milestoneTitle}");
         }
 
-        internal async Task<List<Issue>> GetIssues(Repository repo, RepositoryIssueRequest request, int pageSize = DefaultPageSize)
+        public async Task<List<Issue>> GetIssues(Repository repo, RepositoryIssueRequest request, int pageSize = DefaultPageSize)
         {
             var list = new List<Issue>();
             var options = new ApiOptions()
@@ -68,7 +83,9 @@ namespace DumpBugs
             var issues = _client.Issue;
             do
             {
-                var pageIssues = await issues.GetAllForRepository(repo.Id, request, options);
+                var pageIssues = request != null
+                    ? await issues.GetAllForRepository(repo.Id, request, options)
+                    : await issues.GetAllForRepository(repo.Id, options);
                 list.AddRange(pageIssues);
                 if (pageIssues.Count < pageSize)
                 {

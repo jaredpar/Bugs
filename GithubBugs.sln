@@ -5,6 +5,23 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DumpBugs", "DumpBugs\DumpBugs.csproj", "{436A1662-BE89-4732-97C8-147C9DCF82E2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheBugs", "TheBugs\TheBugs.csproj", "{8A772058-E29C-43A5-88F2-2EAFDF35A794}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PublishScripts", "PublishScripts", "{EB2D337A-E2F4-4045-A258-453D07161E00}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{AB0E80E5-BB7E-44AC-B18E-8384B67CE8CF}"
+	ProjectSection(SolutionItems) = preProject
+		PublishScripts\Scripts\Deploy-AzureResourceGroup.ps1 = PublishScripts\Scripts\Deploy-AzureResourceGroup.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Templates", "Templates", "{56A9E2A0-2BE0-4F2F-9640-A3767006EFF9}"
+	ProjectSection(SolutionItems) = preProject
+		PublishScripts\Templates\TheBugs.json = PublishScripts\Templates\TheBugs.json
+		PublishScripts\Templates\TheBugs.param.dev.json = PublishScripts\Templates\TheBugs.param.dev.json
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheBugs.Core", "TheBugs.Core\TheBugs.Core.csproj", "{8AA079D0-63A2-47A6-B59B-5F7A541A0DCB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,8 +32,20 @@ Global
 		{436A1662-BE89-4732-97C8-147C9DCF82E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{436A1662-BE89-4732-97C8-147C9DCF82E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{436A1662-BE89-4732-97C8-147C9DCF82E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A772058-E29C-43A5-88F2-2EAFDF35A794}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A772058-E29C-43A5-88F2-2EAFDF35A794}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A772058-E29C-43A5-88F2-2EAFDF35A794}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A772058-E29C-43A5-88F2-2EAFDF35A794}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AA079D0-63A2-47A6-B59B-5F7A541A0DCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AA079D0-63A2-47A6-B59B-5F7A541A0DCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AA079D0-63A2-47A6-B59B-5F7A541A0DCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AA079D0-63A2-47A6-B59B-5F7A541A0DCB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{AB0E80E5-BB7E-44AC-B18E-8384B67CE8CF} = {EB2D337A-E2F4-4045-A258-453D07161E00}
+		{56A9E2A0-2BE0-4F2F-9640-A3767006EFF9} = {EB2D337A-E2F4-4045-A258-453D07161E00}
 	EndGlobalSection
 EndGlobal

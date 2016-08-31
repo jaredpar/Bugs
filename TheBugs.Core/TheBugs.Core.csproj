@@ -4,17 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{436A1662-BE89-4732-97C8-147C9DCF82E2}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{8AA079D0-63A2-47A6-B59B-5F7A541A0DCB}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DumpBugs</RootNamespace>
-    <AssemblyName>DumpBugs</AssemblyName>
+    <RootNamespace>TheBugs</RootNamespace>
+    <AssemblyName>TheBugs.Core</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -51,18 +48,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="CsvUtil.cs" />
+    <Compile Include="RoachIssue.cs" />
+    <Compile Include="IssueQuery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueryUtil.cs" />
+    <Compile Include="RoachIssueId.cs" />
+    <Compile Include="RoachRepoId.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\TheBugs.Core\TheBugs.Core.csproj">
-      <Project>{8aa079d0-63a2-47a6-b59b-5f7a541a0dcb}</Project>
-      <Name>TheBugs.Core</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

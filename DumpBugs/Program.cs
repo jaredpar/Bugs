@@ -7,6 +7,8 @@ using Octokit;
 using System.IO;
 using System.Collections.Immutable;
 using FileMode = System.IO.FileMode;
+using TheBugs;
+using System.Diagnostics;
 
 namespace DumpBugs
 {
@@ -25,18 +27,36 @@ namespace DumpBugs
                 client.Credentials = ReadCredentials();
                 var queryUtil = new QueryUtil(client);
                 var repo = await client.Repository.Get("dotnet", "roslyn");
-                var issueQuery = GetIssueQuery();
-                var list = await queryUtil.GetIssues(repo, issueQuery);
-                var filtered = list.Where(x => IsMatchingLabels(x.Labels));
+                var list = new List<RoachIssue>();
 
-                using (var stream = File.Open(@"c:\users\jaredpar\Documents\issues.csv", FileMode.Create))
-                using (var textWriter = new StreamWriter(stream))
+                foreach (var title in GetMileStones())
                 {
-                    textWriter.WriteLine("Milestone,Assignee,Count,Url");
-                    foreach (var issue in filtered)
+                    var milestone = await queryUtil.GetMilestone(repo, title);
+                    var request = new RepositoryIssueRequest()
                     {
-                        textWriter.WriteLine($"{issue.Milestone.Title},{issue.Assignee.Login},1,{issue.Url}");
+                        Milestone = $"{milestone.Number}",
+                        Filter = IssueFilter.All,
+                    };
+
+
+                    var issues = await client.Issue.GetAllForRepository(repo.Id, request);
+                    foreach (var issue in issues)
+                    {
+                        list.Add(new RoachIssue(repo, issue));
                     }
+                }
+
+                var documentPath = @"c:\users\jaredpar\Documents\issues.csv";
+                using (var stream = File.Open(documentPath, FileMode.Create))
+                {
+                    CsvUtil.Export(stream, list);
+                }
+
+                // Sanity check
+                using (var stream = File.Open(documentPath, FileMode.Open))
+                {
+                    var all = CsvUtil.Import(stream);
+                    Debug.Assert(all.Count == list.Count);
                 }
 
                 return 0;
@@ -68,41 +88,15 @@ namespace DumpBugs
             return new Credentials(items[0], items[1]);
         }
 
-        private static IssueQuery GetIssueQuery()
+        private static IEnumerable<string> GetMileStones()
         {
-            var team = new[]
-            {
-                "jaredpar",
-                "gafter",
-                "VSadov",
-                "cston",
-                "tyoverby",
-                "jcouv",
-                "AlekseyTs",
-                "agocke",
-            };
-
             var milestones = new[]
             {
                 "2.0 (Preview 5)",
                 "2.0 (RC)",
                 "2.0 (RTM)",
             };
-
-            return new IssueQuery(team, milestones);
+            return milestones;
         }
     }
-
-    internal class IssueQuery
-    {
-        internal ImmutableArray<string> Team { get; }
-        internal ImmutableArray<string> Milestones { get; }
-
-        internal IssueQuery(IEnumerable<string> team, IEnumerable<string> milestones)
-        {
-            Team = team.ToImmutableArray();
-            Milestones = milestones.ToImmutableArray();
-        }
-    }
-
 }
