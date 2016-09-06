@@ -46,7 +46,7 @@ namespace DumpBugs
                     }
                 }
 
-                var documentPath = @"c:\users\jaredpar\Documents\issues.csv";
+                var documentPath = @"..\..\..\TheBugs\App_Data\issues.csv";
                 using (var stream = File.Open(documentPath, FileMode.Create))
                 {
                     CsvUtil.Export(stream, list);
