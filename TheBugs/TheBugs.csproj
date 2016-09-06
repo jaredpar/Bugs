@@ -179,6 +179,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AssignedBugs.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -245,6 +246,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Bugs\Graph.cshtml" />
+    <Content Include="Views\Bugs\Assigned.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TheBugs.Core\TheBugs.Core.csproj">

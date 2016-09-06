@@ -1,0 +1,26 @@
+﻿@using TheBugs.Models
+@model AssignedBugs
+
+<h2>Assigned bugs @Model.Assignee</h2>
+<h3>Total @Model.Issues.Count</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Number</th>
+            <th>Title</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var issue in Model.Issues)
+        {
+            <tr>
+                <td><a href="@issue.Url">@issue.Number</a></td>
+                <td>@issue.Title</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+

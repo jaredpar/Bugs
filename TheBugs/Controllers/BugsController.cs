@@ -26,10 +26,24 @@ namespace TheBugs.Controllers
             return View();
         }
 
-        public ActionResult Graph()
+        public ActionResult Graph(string filter = null)
         {
             var storage = Storage.GetOrCreate(Server);
-            return View(storage.Issues);
+            return View(Storage.Filter(storage.Issues, filter));
+        }
+
+        public ActionResult Assigned(string assignee = null, string filter = null)
+        {
+            var storage = Storage.GetOrCreate(Server);
+            var issues = Storage.Filter(storage.Issues, filter);
+
+            if (!string.IsNullOrEmpty(assignee))
+            {
+                issues = issues.Where(x => x.Assignee == assignee);
+            }
+
+            var model = new AssignedBugs(assignee, filter, issues.ToList());
+            return View(model);
         }
     }
 }
