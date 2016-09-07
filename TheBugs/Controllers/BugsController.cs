@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using TheBugs.Models;
 using TheBugs.Utils;
+using System.Collections.Generic;
 
 namespace TheBugs.Controllers
 {
@@ -22,27 +23,32 @@ namespace TheBugs.Controllers
 
         public ActionResult Index()
         {
-            var storage = Storage.GetOrCreate(Server);
-            return View();
+            return RedirectToAction(nameof(List));
         }
 
-        public ActionResult Graph(string filter = null)
+        public ActionResult Graph(string assignee = null, string view = null, List<int> milestones = null)
         {
-            var storage = Storage.GetOrCreate(Server);
-            return View(Storage.Filter(storage.Issues, filter));
+            return RunCore(nameof(Graph), assignee, view, milestones);
         }
 
-        public ActionResult Assigned(string assignee = null, string filter = null)
+        public ActionResult List(string assignee = null, string view = null, List<int> milestones = null)
         {
-            var storage = Storage.GetOrCreate(Server);
-            var issues = Storage.Filter(storage.Issues, filter);
+            return RunCore(nameof(List), assignee, view, milestones);
+        }
 
-            if (!string.IsNullOrEmpty(assignee))
+        private ActionResult RunCore(string actionName, string assignee = null, string view = null, List<int> milestones = null)
+        {
+            // Case of parameter binding where milestone= is passed without a value.
+            if (milestones != null && milestones.Count == 1 && milestones[0] == 0)
             {
-                issues = issues.Where(x => x.Assignee == assignee);
+                milestones.Clear();
             }
 
-            var model = new AssignedBugs(assignee, filter, issues.ToList());
+            var storage = Storage.GetOrCreate(Server);
+
+            var query = QueryModel.Create(storage, actionName: actionName, assignee: assignee, view: view, milestones: milestones);
+            var issues = storage.Filter(assignee, view, query.Milestones);
+            var model = new ListModel(query, issues.ToList());
             return View(model);
         }
     }

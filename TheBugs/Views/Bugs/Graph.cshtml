@@ -1,5 +1,6 @@
-﻿@model IEnumerable<RoachIssue>
+﻿@using TheBugs.Models
 @using System.Text;
+@model ListModel
 
 @{ 
     ViewBag.Title = "Assigned Graph";
@@ -8,7 +9,7 @@
     var header = $"Developer,Count";
 
     var builder = new StringBuilder();
-    foreach (var group in Model.GroupBy(x => x.Assignee))
+    foreach (var group in Model.Issues.GroupBy(x => x.Assignee))
     {
         var count = group.Count();
         if (builder.Length > 0)
@@ -22,9 +23,12 @@
 
 <div>
     <h2>Assigned Bugs</h2>
+    <h3>Total: @Model.Issues.Count</h3>
 </div>
 
-<div id="pie_chart" style="width: 900px; height: 500px" data-title="@title" data-header="@header" data-values="@builder.ToString()" />
+<div id="pie_chart" style="width: 900px; height: 500px" data-title="@title" data-header="@header" data-values="@builder.ToString()" ></div>
+
+@Html.Partial("QueryFilter", Model.QueryModel)
 
 @section scripts {
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>

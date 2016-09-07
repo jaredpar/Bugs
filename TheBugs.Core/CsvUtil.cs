@@ -16,7 +16,14 @@ namespace TheBugs
             {
                 foreach (var data in issues)
                 {
-                    textWriter.WriteLine($"{data.RepoId.Owner},{data.RepoId.Name},{data.Number},{data.Assignee},{data.Milestone},{Escape(data.Title)},{data.IsOpen},{EncodeList(data.Labels)},{data.Url}");
+                    textWriter.Write($"{data.RepoId.Owner},{data.RepoId.Name},");
+                    textWriter.Write($"{data.Number},");
+                    textWriter.Write($"{data.Assignee},");
+                    textWriter.Write($"{Escape(data.Milestone.Title)},{data.Milestone.Number},");
+                    textWriter.Write($"{Escape(data.Title)},");
+                    textWriter.Write($"{data.IsOpen},");
+                    textWriter.Write($"{EncodeList(data.Labels)}");
+                    textWriter.WriteLine();
                 }
             }
         }
@@ -30,10 +37,19 @@ namespace TheBugs
                 while (line != null)
                 {
                     var parts = line.Split(new[] { ',' }, count: 9);
-                    var repoId = new RoachRepoId(parts[0], parts[1]);
-                    var issueId = new RoachIssueId(repoId, int.Parse(parts[2]));
-                    var data = new RoachIssue(issueId, parts[3], parts[4], parts[5], bool.Parse(parts[6]), DecodeList(parts[7]).ToImmutableArray(), new Uri(parts[8]));
-                    list.Add(data);
+                    var index = 0;
+                    Func<string> next = () => parts[index++];
+
+                    var repoId = new RoachRepoId(next(), next());
+                    var issueId = new RoachIssueId(repoId, int.Parse(next()));
+                    var issue = new RoachIssue(
+                        id: issueId,
+                        assignee: next(),
+                        milestone: new RoachMilestone(next(), int.Parse(next())),
+                        title: next(),
+                        isOpen: bool.Parse(next()),
+                        labels: DecodeList(next()).ToImmutableArray());
+                    list.Add(issue);
                     line = textReader.ReadLine();
                 }
 

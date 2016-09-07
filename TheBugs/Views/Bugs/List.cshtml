@@ -1,7 +1,7 @@
 ﻿@using TheBugs.Models
-@model AssignedBugs
+@model ListModel
 
-<h2>Assigned bugs @Model.Assignee</h2>
+<h2>Assigned bugs @Model.QueryModel.Assignee</h2>
 <h3>Total @Model.Issues.Count</h3>
 <table class="table">
     <thead>
@@ -20,6 +20,9 @@
         }
     </tbody>
 </table>
+
+@Html.Partial("QueryFilter", Model.QueryModel)
+
 
 
 

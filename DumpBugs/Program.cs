@@ -38,7 +38,6 @@ namespace DumpBugs
                         Filter = IssueFilter.All,
                     };
 
-
                     var issues = await client.Issue.GetAllForRepository(repo.Id, request);
                     foreach (var issue in issues)
                     {

@@ -7,19 +7,47 @@ using System.Web;
 
 namespace TheBugs.Utils
 {
-    internal sealed class Storage
+    public sealed class Storage
     {
         // TODO: move to better storage.
         private static Storage s_instance;
 
-        internal ImmutableArray<RoachIssue> Issues { get; }
+        public ImmutableArray<RoachIssue> Issues { get; }
+        public ImmutableArray<RoachMilestone> Milestones { get; }
+        public ImmutableDictionary<int, RoachMilestone> MilestoneMap { get; }
 
-        internal Storage(ImmutableArray<RoachIssue> issues)
+        public Storage(ImmutableArray<RoachIssue> issues)
         {
             Issues = issues;
+            MilestoneMap = issues
+                .Select(x => x.Milestone)
+                .ToImmutableDictionary(x => x.Number);
+            Milestones = MilestoneMap.Values.ToImmutableArray();
         }
 
-        internal static Storage GetOrCreate(HttpServerUtilityBase server)
+        public IEnumerable<RoachIssue> Filter(
+            string assignee,
+            string view,
+            IList<int> milestones)
+        {
+            var issues = view == "jaredpar"
+                ? Issues.Where(x => FilterUtil.CompilerTeam.IsIssue(x))
+                : Issues;
+
+            if (!string.IsNullOrEmpty(assignee))
+            {
+                issues = issues.Where(x => x.Assignee == assignee);
+            }
+
+            if (milestones.Count > 0)
+            {
+                issues = issues.Where(x => milestones.Contains(x.Milestone.Number));
+            }
+
+            return issues;
+        }
+
+        public static Storage GetOrCreate(HttpServerUtilityBase server)
         {
             if (s_instance != null)
             {
@@ -38,16 +66,6 @@ namespace TheBugs.Utils
                 var issues = CsvUtil.Import(stream);
                 return new Storage(issues.ToImmutableArray());
             }
-        }
-
-        internal static IEnumerable<RoachIssue> Filter(IEnumerable<RoachIssue> issues, string filterName)
-        {
-            if (filterName != "jaredpar")
-            {
-                return issues;
-            }
-
-            return issues.Where(x => FilterUtil.CompilerTeam.IsIssue(x));
         }
    }
 }

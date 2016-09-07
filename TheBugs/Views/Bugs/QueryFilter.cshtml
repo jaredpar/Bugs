@@ -1,0 +1,61 @@
+﻿@using TheBugs.Models;
+@model QueryModel
+
+@{
+    var allSelected = Model.Milestones.Length == 0 ? @"selected=""true""" : "";
+
+    var items = new List<SelectListItem>();
+    items.Add(new SelectListItem()
+    {
+        Text = "All",
+        Value = "",
+        Selected = Model.Milestones.Length == 0
+    });
+
+    foreach (var milestone in Model.AllMilestones)
+    {
+        items.Add(new SelectListItem()
+        {
+            Text = milestone.Title,
+            Value = milestone.Number.ToString(),
+            Selected = Model.Milestones.Contains(milestone.Number)
+        });
+    }
+}
+
+<h2>Filter Results</h2>
+
+@using (Html.BeginForm(controllerName: "Bugs", actionName: Model.ActionName, method: FormMethod.Get))
+{
+    if (Model.Assignee != null)
+    {
+        <input id="filter_assignee" type="hidden" name="assignee" value="@Model.Assignee" />
+    }
+
+    if (Model.View != null)
+    {
+        <input type="hidden" name="view" value="@Model.View" />
+    }
+
+    <div>
+        <div>Milestone</div>
+        <div>@Html.ListBox(name: "milestones", selectList: items)</div>
+        <div><input type="submit" value="Refresh" /></div>
+    </div>
+}
+
+<!-- Hidden form that can be used to force a list view -->
+@using (Html.BeginForm(controllerName: "Bugs", actionName: "List", method: FormMethod.Get, htmlAttributes: new { id = "filter_form" }))
+{
+    <input id="filter_assignee" type="hidden" name="assignee" value="@Model.Assignee" />
+
+    if (Model.View != null)
+    {
+        <input type="hidden" name="view" value="@Model.View" />
+    }
+
+    foreach (var milestone in Model.Milestones)
+    {
+        <input type="hidden" name="milestones" value="@milestone" />
+    }
+}
