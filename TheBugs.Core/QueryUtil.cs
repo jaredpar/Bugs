@@ -42,6 +42,11 @@ namespace TheBugs
         public async Task<List<Issue>> GetIssuesInMilestone(Repository repo, string milestoneTitle)
         {
             var milestone = await GetMilestone(repo, milestoneTitle);
+            return await GetIssuesInMilestone(repo, milestone);
+        }
+
+        public async Task<List<Issue>> GetIssuesInMilestone(Repository repo, Milestone milestone)
+        {
             var request = new RepositoryIssueRequest();
             request.Milestone = $"{milestone.Number}";
             return await GetIssues(repo, request);
@@ -75,7 +80,7 @@ namespace TheBugs
             var options = new ApiOptions()
             {
                 PageCount = 1,
-                StartPage = 0,
+                StartPage = 1,
                 PageSize = pageSize
             };
 

@@ -38,7 +38,7 @@ namespace DumpBugs
                         Filter = IssueFilter.All,
                     };
 
-                    var issues = await client.Issue.GetAllForRepository(repo.Id, request);
+                    var issues = await queryUtil.GetIssuesInMilestone(repo, milestone);
                     foreach (var issue in issues)
                     {
                         list.Add(new RoachIssue(repo, issue));
