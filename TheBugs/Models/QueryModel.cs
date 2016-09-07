@@ -30,7 +30,7 @@ namespace TheBugs.Models
         }
 
         public static QueryModel Create(
-            Storage storage, 
+            DataStorage storage, 
             string actionName,
             string assignee = null, 
             List<int> milestones = null,

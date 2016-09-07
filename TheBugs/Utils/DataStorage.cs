@@ -7,16 +7,16 @@ using System.Web;
 
 namespace TheBugs.Utils
 {
-    public sealed class Storage
+    public sealed class DataStorage
     {
         // TODO: move to better storage.
-        private static Storage s_instance;
+        private static DataStorage s_instance;
 
         public ImmutableArray<RoachIssue> Issues { get; }
         public ImmutableArray<RoachMilestone> Milestones { get; }
         public ImmutableDictionary<int, RoachMilestone> MilestoneMap { get; }
 
-        public Storage(ImmutableArray<RoachIssue> issues)
+        public DataStorage(ImmutableArray<RoachIssue> issues)
         {
             Issues = issues;
             MilestoneMap = issues
@@ -58,7 +58,7 @@ namespace TheBugs.Utils
             return issues;
         }
 
-        public static Storage GetOrCreate(HttpServerUtilityBase server)
+        public static DataStorage GetOrCreate(HttpServerUtilityBase server)
         {
             if (s_instance != null)
             {
@@ -69,13 +69,13 @@ namespace TheBugs.Utils
             return s_instance;
         }
 
-        private static Storage Create(HttpServerUtilityBase server)
+        private static DataStorage Create(HttpServerUtilityBase server)
         {
             var path = server.MapPath("~/App_Data/issues.csv");
             using (var stream = File.Open(path, FileMode.Open))
             {
                 var issues = CsvUtil.Import(stream);
-                return new Storage(issues.ToImmutableArray());
+                return new DataStorage(issues.ToImmutableArray());
             }
         }
    }

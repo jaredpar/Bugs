@@ -44,7 +44,7 @@ namespace TheBugs.Controllers
                 milestones.Clear();
             }
 
-            var storage = Storage.GetOrCreate(Server);
+            var storage = DataStorage.GetOrCreate(Server);
 
             var query = QueryModel.Create(storage, actionName: actionName, assignee: assignee, view: view, milestones: milestones);
             var issues = storage.Filter(assignee, view, query.Milestones);
