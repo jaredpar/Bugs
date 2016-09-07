@@ -10,6 +10,8 @@ using FileMode = System.IO.FileMode;
 using TheBugs;
 using System.Diagnostics;
 using System.Configuration;
+using TheBugs.Storage;
+using Microsoft.WindowsAzure.Storage;
 
 namespace DumpBugs
 {
@@ -26,6 +28,11 @@ namespace DumpBugs
             {
                 var client = new GitHubClient(new ProductHeaderValue("JaredsAmazingGithubBugClient"));
                 client.Credentials = ReadCredentials();
+
+                var storageAccount = CloudStorageAccount.Parse(ConfigurationManager.AppSettings[Constants.StorageConnectionStringName]);
+                AzureUtil.EnsureAzureResources(storageAccount);
+                var table = storageAccount.CreateCloudTableClient().GetTableReference(AzureConstants.TableNames.RoachIssueTable);
+
                 var queryUtil = new QueryUtil(client);
                 var repo = await client.Repository.Get("dotnet", "roslyn");
                 var list = new List<RoachIssue>();
@@ -46,18 +53,9 @@ namespace DumpBugs
                     }
                 }
 
-                var documentPath = @"..\..\..\TheBugs\App_Data\issues.csv";
-                using (var stream = File.Open(documentPath, FileMode.Create))
-                {
-                    CsvUtil.Export(stream, list);
-                }
-
-                // Sanity check
-                using (var stream = File.Open(documentPath, FileMode.Open))
-                {
-                    var all = CsvUtil.Import(stream);
-                    Debug.Assert(all.Count == list.Count);
-                }
+                Console.WriteLine("Inserting into Azure tables");
+                var entityList = list.Select(x => new RoachIssueEntity(x)).ToList();
+                await AzureUtil.InsertBatchUnordered(table, entityList);
 
                 return 0;
             }

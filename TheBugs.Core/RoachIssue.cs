@@ -22,14 +22,14 @@ namespace TheBugs
         public string UriString => $"https://github.com/{RepoId.Owner}/{RepoId.Name}/issues/{Number}";
         public Uri Url => new Uri(UriString);
 
-        public RoachIssue(RoachIssueId id, string assignee, RoachMilestone milestone, string title, bool isOpen, ImmutableArray<string> labels)
+        public RoachIssue(RoachIssueId id, string assignee, RoachMilestone milestone, string title, bool isOpen, IEnumerable<string> labels)
         {
             Id = id;
             Assignee = assignee;
             Milestone = milestone;
             Title = title;
             IsOpen = isOpen;
-            Labels = labels;
+            Labels = labels.ToImmutableArray();
         }
 
         public RoachIssue(Repository repo, Issue issue) : this(

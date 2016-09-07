@@ -10,10 +10,11 @@ namespace TheBugs.Storage
     {
         public static class TableNames
         {
+            public const string RoachIssueTable = "RoachIssues";
 
             public static IEnumerable<string> All()
             {
-                yield break;
+                yield return RoachIssueTable;
             }
         }
 

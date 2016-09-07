@@ -88,8 +88,10 @@
     <Compile Include="Storage\AzureConstants.cs" />
     <Compile Include="Storage\AzureUtil.cs" />
     <Compile Include="Storage\EntityKey.cs" />
+    <Compile Include="Storage\EntityKeyUtil.cs" />
     <Compile Include="Storage\Extensions.cs" />
     <Compile Include="Storage\FilterUtil.cs" />
+    <Compile Include="Storage\RoachIssueEntity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
