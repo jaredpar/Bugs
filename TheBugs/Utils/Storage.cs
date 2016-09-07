@@ -30,9 +30,20 @@ namespace TheBugs.Utils
             string view,
             IList<int> milestones)
         {
-            var issues = view == "jaredpar"
-                ? Issues.Where(x => FilterUtil.CompilerTeam.IsIssue(x))
-                : Issues;
+            IEnumerable<RoachIssue> issues = Issues;
+
+            if (view != null)
+            {
+                switch (view)
+                {
+                    case "jaredpar":
+                        issues = issues.Where(x => FilterUtil.CompilerTeam.IsIssue(x));
+                        break;
+                    case "pilchie":
+                        issues = issues.Where(x => FilterUtil.IdeTeam.IsIssue(x));
+                        break;
+                }
+            }
 
             if (!string.IsNullOrEmpty(assignee))
             {

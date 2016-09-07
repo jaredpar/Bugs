@@ -32,11 +32,53 @@ namespace TheBugs.Utils
                 return issue.Labels.Contains("Area-Compilers");
             }
 
-            internal static bool IsNotBug(RoachIssue issue)
+            internal static bool IsIssue(RoachIssue issue)
             {
-                return
-                    issue.Labels.Contains("Documentation") ||
-                    issue.Labels.Contains("Question");
+                if (IsNotBug(issue))
+                {
+                    return false;
+                }
+
+                if (AssignedToTeam(issue))
+                {
+                    return true;
+                }
+
+                if (AssignedToArea(issue) && issue.Assignee == Constants.UnassignedName)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+
+        }
+
+        internal static class IdeTeam
+        {
+            internal static bool AssignedToTeam(RoachIssue issue)
+            {
+                switch (issue.Assignee.ToLower())
+                {
+                    case "pilchie":
+                    case "balajikris":
+                    case "brettfo":
+                    case "cyrusnajmabadi":
+                    case "dpoeschl":
+                    case "dustincampbell":
+                    case "jasonmalinowski":
+                    case "jmarolf":
+                    case "rchande":
+                    case "tmeschter":
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+
+            internal static bool AssignedToArea(RoachIssue issue)
+            {
+                return issue.Labels.Contains("Area-Ide");
             }
 
             internal static bool IsIssue(RoachIssue issue)
@@ -59,6 +101,13 @@ namespace TheBugs.Utils
                 return false;
             }
 
+        }
+
+        internal static bool IsNotBug(RoachIssue issue)
+        {
+            return
+                issue.Labels.Contains("Documentation") ||
+                issue.Labels.Contains("Question");
         }
     }
 }
