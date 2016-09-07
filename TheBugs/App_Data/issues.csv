@@ -1,30 +1,26 @@
-dotnet,roslyn,13648,gafter,2.0 (Preview 5),15,Revert an incorrect optimization in binary operator overload resolution,True,Area-Compilers#cla-already-signed
+dotnet,roslyn,13666,jcouv,2.0 (Preview 5),15,No accessibility error on error tuple fields,True,Area-Compilers#cla-already-signed#New Language Feature - Tuples
+dotnet,roslyn,13662,jcouv,2.0 (Preview 5),15,VB tuples: support partially named tuple elements,True,Area-Compilers#New Language Feature - Tuples
+dotnet,roslyn,13660,gafter,2.0 (Preview 5),15,Scope_DeclaratorArguments_* tests for Out Variables should be cloned for Pattern Variables.,True,Area-Compilers#Language-C##New Language Feature - Pattern Matching
+dotnet,roslyn,13648,gafter,2.0 (Preview 5),15,Revert an incorrect optimization in binary operator overload resolution,True,4 - In Review#Area-Compilers#Bug#cla-already-signed
 dotnet,roslyn,13638,jcouv,2.0 (Preview 5),15,SymbolCompletion shouldn't treat colon as a commit character in tuple,True,Area-Compilers#cla-already-signed#New Language Feature - Tuples
 dotnet,roslyn,13636,gafter,2.0 (Preview 5),15,In a syntactic position where an lvalue is expected  we reserve `var (...)`,True,4 - In Review#Area-Compilers#cla-already-signed#New Language Feature - Out Variable Declaration#New Language Feature - Tuples
 dotnet,roslyn,13633,jcouv,2.0 (Preview 5),15,Adding tests for deconstruction,True,Area-Compilers#cla-already-signed#New Language Feature - Tuples
-dotnet,roslyn,13632,jcouv,2.0 (Preview 5),15,Optimization: Don't use any temps for most straightforward deconstruction,True,Area-Compilers#New Language Feature - Tuples
 dotnet,roslyn,13556,jasonmalinowski,2.0 (Preview 5),15,Options fail to deserialize,True,Area-IDE#Bug
-dotnet,roslyn,13543,gafter,2.0 (Preview 5),15,Add C# feature "Expression body syntax for property accessors",True,4 - In Review#Area-Compilers#cla-already-signed#Feature Request
-dotnet,roslyn,13535,agocke,2.0 (Preview 5),15,Enable declaration patterns in the EE,True,4 - In Review#Area-Compilers#Area-Interactive#Bug#cla-already-signed#Interactive-Debugging
-dotnet,roslyn,13528,AlekseyTs,2.0 (Preview 5),15,Adjust wording for ERR_ExpressionVariableInConstructorOrFieldInitializer error,True,4 - In Review#Area-Compilers#Bug#Language-C##New Language Feature - Out Variable Declaration#New Language Feature - Pattern Matching
 dotnet,roslyn,13527,jcouv,2.0 (Preview 5),15,Typing ':' (colon) after open-paren should not commit completion,True,3 - Working#Area-Compilers#New Language Feature - Tuples
 dotnet,roslyn,13506,jasonmalinowski,2.0 (Preview 5),15,Microsoft.CodeAnalysis.UnitTests.SolutionTests.TestRecoverableSyntaxTreeCSharp seems flaky,True,Area-IDE#Flaky
 dotnet,roslyn,13502,jcouv,2.0 (Preview 5),15,Update tuple element indices and TupleElementFields API,True,Area-Compilers#New Language Feature - Tuples
 dotnet,roslyn,13496,CyrusNajmabadi,2.0 (Preview 5),15,"Suggestion" severity UI is too hard to see,True,Area-IDE#Bug
 dotnet,roslyn,13476,jmarolf,2.0 (Preview 5),15,Integration test AddMissingReference.xml requires FX 4.0 Targeting pack,True,Area-IDE#Area-Infrastructure#Test
-dotnet,roslyn,13460,AlekseyTs,2.0 (Preview 5),15,Issue binding (erroneous) variables in a declarator argument list.,True,4 - In Review#Area-Compilers#Bug#New Language Feature - Out Variable Declaration#New Language Feature - Pattern Matching
 dotnet,roslyn,13450,AlekseyTs,2.0 (Preview 5),15,Out variables in top level script causes .GetDiagnostics() to throw an exception,True,3 - Working#Area-Compilers#Bug#Interactive-ScriptingLogic#New Language Feature - Out Variable Declaration
 dotnet,roslyn,13435,none,2.0 (Preview 5),15,IDE should not offer to "introduce local" for a throw expression,True,Area-Compilers#Area-IDE#Bug#New Language Feature - Throw Expression
 dotnet,roslyn,13433,jasonmalinowski,2.0 (Preview 5),15,Flaky test failure: Microsoft.CodeAnalysis.UnitTests.SolutionTests.TestGetSyntaxRootDoesNotKeepRootAlive ,True,Area-IDE#Area-Infrastructure#Flaky#Test
-dotnet,roslyn,13428,VSadov,2.0 (Preview 5),15,Conversion objects no longer cached.,True,Area-Compilers#Bug#New Language Feature - Tuples
 dotnet,roslyn,13417,jaredpar,2.0 (Preview 5),15,Pattern variables in fixed field size doesn't have a supported scope,True,Area-Compilers#Bug#New Language Feature - Pattern Matching
 dotnet,roslyn,13398,mattwar,2.0 (Preview 5),15,Can't find logic that squash many incremental parses into one full parse ,True,Area-IDE#Question
-dotnet,roslyn,13380,gafter,2.0 (Preview 5),15,Error combining nullable and implicit operators,True,3 - Working#Area-Compilers#Bug#Tenet-Compatibility
+dotnet,roslyn,13380,gafter,2.0 (Preview 5),15,Error combining nullable and implicit operators,True,4 - In Review#Area-Compilers#Bug#Tenet-Compatibility
 dotnet,roslyn,13370,ljw1004,2.0 (Preview 5),15,Recognize task-like types by the presence of an AsyncBuilderAttribute,True,Area-Compilers#Feature Request
 dotnet,roslyn,13327,Pilchie,2.0 (Preview 5),15,Formatting and Rename telemetry goals need to be revisited...,True,Area-IDE#Area-Performance#Tenet-Performance
 dotnet,roslyn,13303,VSadov,2.0 (Preview 5),15,VB tuples: Interface implementation with array of tuples not detected,True,Area-Compilers#Language-VB#New Language Feature - Tuples
-dotnet,roslyn,13302,jcouv,2.0 (Preview 5),15,VB tuples: unexpected accessibility diagnostics for tuple members when ValueTuple type missing,True,Area-Compilers#Language-VB#New Language Feature - Tuples
-dotnet,roslyn,13298,VSadov,2.0 (Preview 5),15,VB Tuples - need to handle generic methods in ValueTuple types,True,Area-Compilers#Bug#Language-VB#New Language Feature - Tuples
+dotnet,roslyn,13302,jcouv,2.0 (Preview 5),15,VB tuples: unexpected accessibility diagnostics for tuple members when ValueTuple type missing,True,4 - In Review#Area-Compilers#Language-VB#New Language Feature - Tuples
 dotnet,roslyn,13277,VSadov,2.0 (Preview 5),15,VB tuples: CreateTupleTypeSymbol crashes with a crafted error underlying type,True,Area-Compilers#Language-VB#New Language Feature - Tuples
 dotnet,roslyn,13256,rchande,2.0 (Preview 5),15,StackOverflowException after deleting .vs folder,True,Area-IDE#Bug
 dotnet,roslyn,13206,cston,2.0 (Preview 5),15,VB: Invalid delegate generated for lambda passed as delegate with ByRef return type,True,Area-Compilers#Bug
@@ -32,7 +28,6 @@ dotnet,roslyn,13204,tmat,2.0 (Preview 5),15,Remove CoreXT workaround added due t
 dotnet,roslyn,13193,agocke,2.0 (Preview 5),15,Missing error for conflicting name of a local method which leads to 'Failed to emit module' compilation error,True,Area-Compilers#Bug#New Language Feature - Local Functions
 dotnet,roslyn,13177,jcouv,2.0 (Preview 5),15,Port ValueTuple library code into mscorlib,True,Area-Compilers#New Language Feature - Tuples
 dotnet,roslyn,13172,agocke,2.0 (Preview 5),15,Local methods don't inherit unsafe context from type  method or block where they are declared,True,Area-Compilers#Bug
-dotnet,roslyn,13159,gafter,2.0 (Preview 5),15,PlaceholderLocalRewriter is unable to handle Declaration Pattern,True,4 - In Review#Area-Compilers#Area-Interactive#Bug#Language-C##New Language Feature - Pattern Matching
 dotnet,roslyn,13148,gafter,2.0 (Preview 5),15,Parsing for out argument declarations needs to take deconstruction and ref returns into account,True,4 - In Review#Area-Compilers#Bug#New Language Feature - Out Variable Declaration
 dotnet,roslyn,13138,none,2.0 (Preview 5),15,[WIP] Add support for embedding sources in Windows PDBs,True,Area-Compilers#cla-already-signed#Interactive-Debugging#PR For Personal Review Only
 dotnet,roslyn,13126,CyrusNajmabadi,2.0 (Preview 5),15,BasicBraceHighlighting.xml test failure,True,Area-IDE#Contributor Pain#Test
@@ -44,7 +39,6 @@ dotnet,roslyn,12922,balajikris,2.0 (Preview 5),15,[Test Failure] Individual TAO 
 dotnet,roslyn,12918,rchande,2.0 (Preview 5),15,PCL does not support targeting .NETStandard 1.6,True,Area-IDE#Bug
 dotnet,roslyn,12889,agocke,2.0 (Preview 5),15,Inconsistent behavior - __arglist in local methods,True,Area-Compilers#Bug#New Language Feature - Local Functions
 dotnet,roslyn,12881,balajikris,2.0 (Preview 5),15,Intermittent failure in CSharpRazor.VerifyCompletionList,True,Area-IDE#Flaky#Test
-dotnet,roslyn,12877,jcouv,2.0 (Preview 5),15,Review sequence points for all new C# 7 nodes,True,Area-Compilers#Feature Request#New Language Feature - Local Functions#New Language Feature - Out Variable Declaration#New Language Feature - Pattern Matching#New Language Feature - Ref Locals and Returns#New Language Feature - Tuples
 dotnet,roslyn,12872,CyrusNajmabadi,2.0 (Preview 5),15,SymbolFinder.FindReferencesAsync TaskCanceledException wrapped as AggregateException ,True,Area-IDE#Bug
 dotnet,roslyn,12866,balajikris,2.0 (Preview 5),15,Intermittent VSI test failure: BasicSmartIndenter,True,Area-IDE#Flaky#Test
 dotnet,roslyn,12858,heejaechang,2.0 (Preview 5),15,Error CS0017 absent from squiggles and error-list "program has more than one entrypoint",True,Area-Analyzers#Bug
@@ -68,7 +62,6 @@ dotnet,roslyn,12730,balajikris,2.0 (Preview 5),15,Move type to file: expose an o
 dotnet,roslyn,12729,balajikris,2.0 (Preview 5),15,Move type to file: not offered on delegates and VB enums,True,Area-IDE#Bug
 dotnet,roslyn,12718,balajikris,2.0 (Preview 5),15,The peculiar case of the vanishing squiggle,True,Area-IDE#Bug
 dotnet,roslyn,12715,kuhlenh,2.0 (Preview 5),15,IDE style settings in tools options should be translated into a workspace level ruleset,True,Area-IDE#Feature Request
-dotnet,roslyn,12714,dpoeschl,2.0 (Preview 5),15,IDE analyzers shouldn't execute on closed files by default,True,Area-IDE#Bug#Tenet-Performance#Urgency-Soon
 dotnet,roslyn,12713,kuhlenh,2.0 (Preview 5),15,Allow end users to explicitly configure closed file execution of analyzers in IDE,True,Area-IDE#Feature Request
 dotnet,roslyn,12707,jasonmalinowski,2.0 (Preview 5),15,ProjectTracker doesn't correctly update P2P/metadata references on project bin path change,True,Area-IDE#Bug
 dotnet,roslyn,12669,balajikris,2.0 (Preview 5),15,Verbatim strings in GridOptionPreviewControl.xaml,True,Area-IDE#Bug#Tenet-Localization
@@ -78,7 +71,6 @@ dotnet,roslyn,12631,DustinCampbell,2.0 (Preview 5),15,Missing `Cast is redundant
 dotnet,roslyn,12625,nguerrera,2.0 (Preview 5),15,Proposal: Embed sources in PDBs,True,3 - Working#Area-Compilers#Feature Request#Feature Specification#Interactive-Debugging
 dotnet,roslyn,12607,Pilchie,2.0 (Preview 5),15,IDE0006 warning issued  but no failed task in logfile,True,Area-IDE
 dotnet,roslyn,12600,balajikris,2.0 (Preview 5),15,Remove Unnecessary Cast adds extra parentheses in arrow method,True,Area-IDE#Bug
-dotnet,roslyn,12597,AlekseyTs,2.0 (Preview 5),15,Scope changes for patterns and out var,True,3 - Working#Area-Compilers#Feature Request#New Language Feature - Out Variable Declaration#New Language Feature - Pattern Matching
 dotnet,roslyn,12547,balajikris,2.0 (Preview 5),15,[Test Failure] Individual TAO Test Failure in windows_vsi_p3_open_prtest on PR #12532,True,Area-IDE#Bug
 dotnet,roslyn,12531,brettfo,2.0 (Preview 5),15,Unable to apply changes to g.i.cs files generated by XAML compiler,True,Area-IDE#Bug
 dotnet,roslyn,12458,rchande,2.0 (Preview 5),15,Project targeting netcoreapp1.0 isn't recognized as netstandard targeting,True,Area-IDE#Bug
@@ -90,7 +82,6 @@ dotnet,roslyn,12380,jaredpar,2.0 (Preview 5),15,Disable EnC in presence of C# 7 
 dotnet,roslyn,12379,jaredpar,2.0 (Preview 5),15,[Umbrella] Disable EnC when a body contains new C# 7 syntax nodes,True,3 - Working#Area-Compilers#Area-Interactive#Interactive-EnC#New Language Feature - Pattern Matching
 dotnet,roslyn,12358,rchande,2.0 (Preview 5),15,Visual Studio 15 cannot build unsafe projects from UI.,True,Area-IDE
 dotnet,roslyn,12352,jaredpar,2.0 (Preview 5),15,CSharpErrorLog - Error List Build Diagnostics failing due to file write lock,True,Area-Compilers#Flaky#Test#Urgency-Soon
-dotnet,roslyn,12347,agocke,2.0 (Preview 5),15,Roundtrip tuple names through metadata,True,Area-Compilers#Feature Request#New Language Feature - Tuples
 dotnet,roslyn,12328,jmarolf,2.0 (Preview 5),15,Update 3 crashes where Update 2 worked,True,Area-IDE#Bug
 dotnet,roslyn,12325,heejaechang,2.0 (Preview 5),15,Update3: Analyzer output is missing in Error List and Code Editor (but shown in Output Window),True,Area-Analyzers#Bug
 dotnet,roslyn,12320,balajikris,2.0 (Preview 5),15,[Flaky test] CSharpRazor fails intermittently,True,Area-IDE#Flaky#Test#Urgency-Now
@@ -112,7 +103,6 @@ dotnet,roslyn,12017,none,2.0 (Preview 5),15,Microsoft.VisualStudio.LanguageServi
 dotnet,roslyn,11959,dpoeschl,2.0 (Preview 5),15,Cannot rename or get completion for using alias,True,Area-IDE#Bug
 dotnet,roslyn,11958,DustinCampbell,2.0 (Preview 5),15,Bug in ParenthesizedExpressionSyntaxExtensions.cs?,True,Area-IDE#Bug
 dotnet,roslyn,11944,none,2.0 (Preview 5),15,How to get Diagnostics chinese message?,True,1 - Planning#Area-Analyzers#Bug
-dotnet,roslyn,11910,jcouv,2.0 (Preview 5),15,Language support for KeyValuePair<TKey  TValue> struct and tuple mappings,True,Area-Language Design#New Language Feature - Tuples
 dotnet,roslyn,11890,rchande,2.0 (Preview 5),15,Naming styles for "private fields" shouldn't apply to script locals.,True,Area-IDE#Bug
 dotnet,roslyn,11863,Pilchie,2.0 (Preview 5),15,VS is unresponsive during a build.,True,Area-IDE#Bug#Perf-Epic
 dotnet,roslyn,11847,Pilchie,2.0 (Preview 5),15,VS2015: IntelliSense randomly breaks  complaining about missing references CS0246,True,Area-IDE#Bug
@@ -147,8 +137,6 @@ dotnet,roslyn,11366,CyrusNajmabadi,2.0 (Preview 5),15,Find All references doesn'
 dotnet,roslyn,11310,jasonmalinowski,2.0 (Preview 5),15,IntelliSense gets confused by aliased references,True,Area-IDE#Bug
 dotnet,roslyn,11303,dpoeschl,2.0 (Preview 5),15,Snippet resolved if the keyword matches enum value,True,Area-IDE#Bug
 dotnet,roslyn,11300,jasonmalinowski,2.0 (Preview 5),15,"Go to Implementation" doesn't have a display name in Tools -> Customize,True,Area-IDE#Bug
-dotnet,roslyn,11291,VSadov,2.0 (Preview 5),15,Misleading errors are reported when compiler fails to infer natural type of a tuple literal,True,Area-Compilers#Bug#Language-C##New Language Feature - Tuples
-dotnet,roslyn,11281,VSadov,2.0 (Preview 5),15,Should provide more specific error message when cardinality of a tuple literal doesn't match target tuple type.,True,Area-Compilers#Bug#Language-C##New Language Feature - Tuples
 dotnet,roslyn,11272,jaredpar,2.0 (Preview 5),15,Add Commit ID to fileversion in assemblies,True,Area-Infrastructure#Feature Request
 dotnet,roslyn,11252,basoundr,2.0 (Preview 5),15,VM counters are displaying 0,True,Area-Performance
 dotnet,roslyn,11250,dpoeschl,2.0 (Preview 5),15,You Cannot Rename This Element,True,Area-IDE#Bug
@@ -247,9 +235,6 @@ dotnet,roslyn,9763,rchande,2.0 (Preview 5),15,New preselection appends namespace
 dotnet,roslyn,9757,jaredpar,2.0 (Preview 5),15,Build should verify no IVT between compiler and workspaces,True,0 - Backlog#Area-Infrastructure#Feature Request
 dotnet,roslyn,9750,agocke,2.0 (Preview 5),15,Mac build reporting wrong number of tests,True,0 - Backlog#Area-Infrastructure#Bug#Urgency-Soon
 dotnet,roslyn,9713,dpoeschl,2.0 (Preview 5),15,Naming style: Should start with default settings for public types/members/etc matching Fx Design Guidelines,True,Area-IDE#Bug
-dotnet,roslyn,9712,dpoeschl,2.0 (Preview 5),15,[PR Available] Naming style: Violations only reported on open files,True,Area-IDE#Bug
-dotnet,roslyn,9711,dpoeschl,2.0 (Preview 5),15,[PR Available] Naming style: Property accessors shouldn't be analyzed,True,Area-IDE#Bug
-dotnet,roslyn,9710,dpoeschl,2.0 (Preview 5),15,[PR Available] Naming Style: Analyzer treats constructor name as .ctor,True,Area-IDE#Bug
 dotnet,roslyn,9702,DustinCampbell,2.0 (Preview 5),15,Visual Studio does not format source code with implicitly typed array (`new[] {1 }`),True,Area-IDE#Bug
 dotnet,roslyn,9674,balajikris,2.0 (Preview 5),15,Missing localization in new Code Style UX,True,Area-IDE#Bug#Tenet-Localization
 dotnet,roslyn,9671,brettfo,2.0 (Preview 5),15,BasicVenus.Script Block: Smart Indent On Moving out of current line,True,3 - Working#Area-IDE#Contributor Pain#Flaky#Urgency-Now
@@ -288,7 +273,6 @@ dotnet,roslyn,9174,genlu,2.0 (Preview 5),15,Several binary operators of VB is no
 dotnet,roslyn,9156,none,2.0 (Preview 5),15,[C# Interactive] Clarify error message when try to #r a script file,True,Area-Interactive
 dotnet,roslyn,9155,balajikris,2.0 (Preview 5),15,Follow up workitems for use var codestyle,True,Area-IDE
 dotnet,roslyn,9111,tmat,2.0 (Preview 5),15,[Pdb] Methods without sequence points should not emit any debug information,True,Area-Interactive#Interactive-Debugging
-dotnet,roslyn,9099,gafter,2.0 (Preview 5),15,'throw' not offered in expression contexts.,True,1 - Planning#Area-Compilers#Bug#Language-C##New Language Feature - Pattern Matching
 dotnet,roslyn,9096,srivatsn,2.0 (Preview 5),15,Determine our "exchange type" dependencies on MPF,True,0 - Backlog#Area-Infrastructure
 dotnet,roslyn,9087,rchande,2.0 (Preview 5),15,VB Completion: Need to show instance members off types that are part of "My.Forms".,True,Area-IDE#Bug
 dotnet,roslyn,9077,genlu,2.0 (Preview 5),15,Replace `VerifyDiagnostics` helper with `AssertTheseDiagnostics` in VB operation test,True,Area-Interactive#New Feature - IOperation#Test
@@ -404,7 +388,6 @@ dotnet,roslyn,7919,DustinCampbell,2.0 (Preview 5),15,System.InvalidCastException
 dotnet,roslyn,7912,rchande,2.0 (Preview 5),15,Completion word breaking heuristics failing with leading _,True,Area-IDE#Bug
 dotnet,roslyn,7901,KevinH-MS,2.0 (Preview 5),15,Using a conditional breakpoint on a collection processing certain LINQ statements causes breakpoint failure,True,Area-Interactive
 dotnet,roslyn,7898,rchande,2.0 (Preview 5),15,Wrong overload in intellisense in C#,True,Area-IDE#Bug
-dotnet,roslyn,7881,jaredpar,2.0 (Preview 5),15,Proposal: Expression bodied get and set methods,True,4 - In Review#Area-Compilers#Area-Language Design#Community
 dotnet,roslyn,7877,DustinCampbell,2.0 (Preview 5),15,"Inline temporary variable" introduces an unnecessary cast,True,Area-IDE#Bug
 dotnet,roslyn,7862,dpoeschl,2.0 (Preview 5),15,Include XML doc comments when implementing an interface with Shift+Alt+F10,True,0 - Backlog#Area-IDE#Community#Feature Request
 dotnet,roslyn,7839,tmat,2.0 (Preview 5),15,Insufficient check for an ability to emit DynamicAttribute in EEMethodSymbol.AddSynthesizedReturnTypeAttributes,True,Area-Interactive#Bug#Language-C#
@@ -522,7 +505,6 @@ dotnet,roslyn,6287,none,2.0 (Preview 5),15,csi should perhaps look into director
 dotnet,roslyn,6276,mattwar,2.0 (Preview 5),15,make CompilationTracker.Finalize in Workspace to create p2p reference that doesnt hold onto compilation strongly,True,Area-IDE#Feature Request#Tenet-Performance
 dotnet,roslyn,6261,mattwar,2.0 (Preview 5),15,Correct way to rename a file in a code fix,True,Area-IDE#Question
 dotnet,roslyn,6208,KevinH-MS,2.0 (Preview 5),15,Can't tell if script has a return value,True,Area-Interactive#Interactive-ScriptingLogic
-dotnet,roslyn,6183,AlekseyTs,2.0 (Preview 5),15,Proposal: out var declaration,True,3 - Working#Area-Language Design#Feature Request#Language-C##New Language Feature - Out Variable Declaration
 dotnet,roslyn,6179,tmat,2.0 (Preview 5),15,Enable GlobalAssemblyCacheTests.GetAssemblyIdentities test,True,Area-Interactive#Bug#Interactive-ScriptingLogic
 dotnet,roslyn,6121,dpoeschl,2.0 (Preview 5),15,The outline box of the inline rename is misleading,True,Area-IDE#Feature Request
 dotnet,roslyn,6107,KevinH-MS,2.0 (Preview 5),15,'.' typed in #r argument should trigger completion,True,Area-Interactive#Bug#Interactive-ScriptingIDE
@@ -767,10 +749,13 @@ dotnet,roslyn,170,KevinH-MS,2.0 (Preview 5),15,Scripts with a void return value 
 dotnet,roslyn,92,natidea,2.0 (Preview 5),15,RuleSet doesn't display newly added analyzers,True,2 - Ready#Area-Analyzers#Bug
 dotnet,roslyn,27,ManishJayaswal,2.0 (Preview 5),15,Method Declaration in Script code shows completions for class,True,Area-Interactive#Bug#Interactive-Debugging#Interactive-ScriptingIDE
 dotnet,roslyn,3,none,2.0 (Preview 5),15,Add symbol files(.pdb/source) to NuGet packages,True,0 - Backlog#Area-Infrastructure
+dotnet,roslyn,13667,none,2.0 (RC),23,Untested code in parsing tuples.,True,Area-Compilers#Bug#New Language Feature - Tuples
 dotnet,roslyn,13642,none,2.0 (RC),23,add analyzer option pages that controls which analyzers run only opened files and all files,True,Area-Analyzers#Bug
 dotnet,roslyn,13641,heejaechang,2.0 (RC),23,make service hub available in editor test app,True,Area-Analyzers#Bug
-dotnet,roslyn,13640,KevinH-MS,2.0 (RC),23,make diagnostic perf tests run on jenkins,True,Bug
+dotnet,roslyn,13640,KevinH-MS,2.0 (RC),23,make diagnostic perf tests run on jenkins,True,Area-Infrastructure#Feature Request
 dotnet,roslyn,13639,heejaechang,2.0 (RC),23,make all IDE analyzers run-able from out of proc,True,Area-Analyzers#Bug
+dotnet,roslyn,13634,none,2.0 (RC),23,Compiler fails to lift some variables in async in Release mode,True,Area-Compilers#Bug
+dotnet,roslyn,13632,jcouv,2.0 (RC),23,Optimization: Don't use any temps for most straightforward deconstruction,True,Area-Compilers#New Language Feature - Tuples
 dotnet,roslyn,13631,jcouv,2.0 (RC),23,Optimize deconstruction of tuple literal to not construct a ValueTuple,True,Area-Compilers#New Language Feature - Tuples
 dotnet,roslyn,13617,none,2.0 (RC),23,Invalid generic extension call does not report error and then fail to emit module.,True,Area-Compilers#Bug
 dotnet,roslyn,13589,none,2.0 (RC),23,Preserve tuple element names for locals declared in the EE,True,Area-Compilers#Area-Interactive#Feature Request#Interactive-Debugging#New Language Feature - Tuples
@@ -824,6 +809,7 @@ dotnet,roslyn,13325,Pilchie,2.0 (RC),23,MSBuildWorkspace doesn't support project
 dotnet,roslyn,13314,AlekseyTs,2.0 (RC),23,Error BC30512 Option Strict On tripped in VS2015 and not in VS2013,True,Area-Compilers#Bug
 dotnet,roslyn,13310,CyrusNajmabadi,2.0 (RC),23,[Go To] Implement "filter to doc scope",True,Area-IDE#Feature Request
 dotnet,roslyn,13309,CyrusNajmabadi,2.0 (RC),23,[Go To] Enable camelCase bolding for files & symbols in GoTo,True,Area-IDE#Feature Request
+dotnet,roslyn,13298,VSadov,2.0 (RC),23,VB Tuples - need to handle generic methods in ValueTuple types,True,Area-Compilers#Bug#Language-VB#New Language Feature - Tuples
 dotnet,roslyn,13275,cston,2.0 (RC),23,EE: Implement ProjectN corlib workaround ,True,Area-Interactive#Interactive-Debugging
 dotnet,roslyn,13270,none,2.0 (RC),23,Phase ordering and bound node design issues for tuple deconstruction,True,Area-Compilers#Bug#New Language Feature - Tuples
 dotnet,roslyn,13268,agocke,2.0 (RC),23,CallerMemberNameAttribute's behavior with local methods can lead to subtle bugs.,True,Area-Compilers#Bug#Investigation Required#New Language Feature - Local Functions
@@ -850,6 +836,7 @@ dotnet,roslyn,13029,none,2.0 (RC),23,Unexpected errors are reported for local fu
 dotnet,roslyn,12993,none,2.0 (RC),23,C# compiler crashes with NullReferenceException in Microsoft.CodeAnalysis.CompilationOptions.get_Errors(),True,Area-Compilers#Bug#Investigation Required
 dotnet,roslyn,12983,none,2.0 (RC),23,Improper IDE colorization of collection classes with Add extension methods ,True,Area-Compilers#Bug
 dotnet,roslyn,12940,AlekseyTs,2.0 (RC),23,Missing bound node for out variable declaration,True,Area-Compilers#Bug#New Language Feature - Out Variable Declaration
+dotnet,roslyn,12877,jcouv,2.0 (RC),23,Review sequence points for all new C# 7 nodes,True,Area-Compilers#Feature Request#New Language Feature - Local Functions#New Language Feature - Out Variable Declaration#New Language Feature - Pattern Matching#New Language Feature - Ref Locals and Returns#New Language Feature - Tuples
 dotnet,roslyn,12813,gafter,2.0 (RC),23,C# 7.0 patterns - constant pattern code generation & expression trees,True,3 - Working#Area-Compilers#Bug#New Language Feature - Pattern Matching#Tenet-Performance
 dotnet,roslyn,12802,jcouv,2.0 (RC),23,Un-necessary parens and type arguments introduced by inline variable on deconstruction,True,Area-Compilers#New Language Feature - Tuples
 dotnet,roslyn,12801,AnthonyDGreen,2.0 (RC),23,Should VB latebinder understand tuple conversions?,True,Area-Compilers#Area-Language Design#Blocked#Bug#Language-VB#New Language Feature - Tuples
@@ -876,12 +863,15 @@ dotnet,roslyn,12007,gafter,2.0 (RC),23,Weird time stamp of *.LanguageServices.*.
 dotnet,roslyn,11992,none,2.0 (RC),23,csc.exe crashing due to uncaught exception,True,Area-Compilers#Bug#Language-C#
 dotnet,roslyn,11990,gafter,2.0 (RC),23,The order in which type forwarders are emitted to ExportedType table is non-deterministic,True,2 - Ready#Area-Compilers#Bug#Concept-Determinism
 dotnet,roslyn,11967,none,2.0 (RC),23,extern event with add/remove doesn't work. ,True,Area-Compilers#Bug#Language-C#
+dotnet,roslyn,11910,jcouv,2.0 (RC),23,Language support for KeyValuePair<TKey  TValue> struct and tuple mappings,True,Area-Language Design#New Language Feature - Tuples
 dotnet,roslyn,11833,none,2.0 (RC),23,Compiler causes VS to OOM when trying to convert overridden property to expression body,True,Area-Compilers#Bug
 dotnet,roslyn,11750,heejaechang,2.0 (RC),23,CompilationEndAction not being called.,True,Area-Analyzers#Feature Request
 dotnet,roslyn,11721,heejaechang,2.0 (RC),23,SolutionCrawler fires events out of order when HighPriorityForActiveFile is true.,True,Area-Analyzers#Bug
 dotnet,roslyn,11624,gafter,2.0 (RC),23,Warn when a "bad constant value" is used in a program,True,0 - Backlog#Area-Compilers#Concept-Diagnostic Clarity#Feature Request
 dotnet,roslyn,11593,heejaechang,2.0 (RC),23,Create VSI test for telemetry so that we can make sure it doesnt get broken by code change,True,Area-Infrastructure#Bug#Tenet-Telemetry
 dotnet,roslyn,11299,jcouv,2.0 (RC),23,Deconstruction work items,True,Area-Compilers#Bug#New Language Feature - Tuples
+dotnet,roslyn,11291,VSadov,2.0 (RC),23,Misleading errors are reported when compiler fails to infer natural type of a tuple literal,True,Area-Compilers#Bug#Language-C##New Language Feature - Tuples
+dotnet,roslyn,11281,VSadov,2.0 (RC),23,Should provide more specific error message when cardinality of a tuple literal doesn't match target tuple type.,True,Area-Compilers#Bug#Language-C##New Language Feature - Tuples
 dotnet,roslyn,11166,jcouv,2.0 (RC),23,Certain generic extension methods do not show up in AutoComplete.,True,Area-Compilers#Bug
 dotnet,roslyn,11063,gafter,2.0 (RC),23,CSC crashes on invalid LINQ syntax,True,0 - Backlog#Area-Compilers#Bug
 dotnet,roslyn,10945,jcouv,2.0 (RC),23,Tuples Work Items,True,Area-Compilers#Bug#New Language Feature - Tuples
@@ -898,6 +888,7 @@ dotnet,roslyn,9313,AlekseyTs,2.0 (RC),23,VB enum matching issues,True,Area-Compi
 dotnet,roslyn,9303,VSadov,2.0 (RC),23,add tests for ?. and generic receivers,True,Area-Compilers#Language-C##Test
 dotnet,roslyn,9206,heejaechang,2.0 (RC),23,re-enable SuppressionStateColumnFilterDefinition,True,Area-Analyzers#Bug
 dotnet,roslyn,9177,heejaechang,2.0 (RC),23,VSIX-based analyser should be disabled when same analyser is configured as nuget  regardless of version,True,Area-Analyzers#Bug
+dotnet,roslyn,9099,gafter,2.0 (RC),23,'throw' not offered in expression contexts.,True,1 - Planning#Area-Compilers#Bug#Language-C##New Language Feature - Throw Expression
 dotnet,roslyn,8999,agocke,2.0 (RC),23,Added code with C# 6 syntax to AllInOne in TestResource.resx. ,True,Area-Compilers#cla-signed#Community
 dotnet,roslyn,8984,agocke,2.0 (RC),23,AllInOne file does not cover C# 6.0 featuries,True,4 - In Review#Area-Compilers#Community#Test
 dotnet,roslyn,8951,agocke,2.0 (RC),23,Csc.dll should be moved from x64 -> AnyCPU,True,Area-Compilers#Feature Request
@@ -906,6 +897,7 @@ dotnet,roslyn,8489,VSadov,2.0 (RC),23,WPF databinding ref-returning properties f
 dotnet,roslyn,8473,tmat,2.0 (RC),23,[Portable PDB] VB hoisted local scopes,True,Area-Interactive#Interactive-Debugging
 dotnet,roslyn,8354,gafter,2.0 (RC),23,CSharpParseOptions has no public constructor that takes feature flags,True,0 - Backlog#Area-Compilers#Bug#Concept-API
 dotnet,roslyn,8210,tmat,2.0 (RC),23,Feature request: Support full-signing when running on CoreCLR.,True,Area-Compilers#Feature Request
+dotnet,roslyn,7881,gafter,2.0 (RC),23,Proposal: Expression bodied get and set methods,True,Area-Compilers#Area-Language Design#Community
 dotnet,roslyn,7588,gafter,2.0 (RC),23,add `csc /version`,True,Area-Compilers#Feature Request
 dotnet,roslyn,7398,gafter,2.0 (RC),23,OOM during constant string folding due to allocations from ConstantStringValue,True,0 - Backlog#Area-Compilers#Bug#Tenet-Reliability
 dotnet,roslyn,7282,gafter,2.0 (RC),23,Expose IMethodSymbol.ImplementationAttributes,True,Area-Compilers#Concept-API#Feature Request
@@ -1144,6 +1136,7 @@ dotnet,roslyn,6296,VSadov,2.0 (RTM),16,What are red and green nodes?,True,Area-C
 dotnet,roslyn,6274,VSadov,2.0 (RTM),16,provide a way to create CompilationReference that get Compilation lazily,True,Area-Compilers#Feature Request#Tenet-Performance
 dotnet,roslyn,6264,jcouv,2.0 (RTM),16,Each call to SemanticModel.GetDiagnostics re-binds field initializers,True,Area-Compilers#Bug
 dotnet,roslyn,6209,none,2.0 (RTM),16,DeclaringSyntaxReferences returns empty list on the underlying ILocalSymbol of a catch statement's variable,True,Area-Compilers#Bug#Concept-API
+dotnet,roslyn,6183,AlekseyTs,2.0 (RTM),16,Proposal: out var declaration,True,3 - Working#Area-Language Design#Feature Request#Language-C##New Language Feature - Out Variable Declaration
 dotnet,roslyn,6163,none,2.0 (RTM),16,AssemblyMetadata and ModuleMetadata's CreateFromStream apis need better documentation?,True,Area-Compilers#Documentation
 dotnet,roslyn,5891,none,2.0 (RTM),16,Region analysis API returning symbols not declared in source,True,Area-Compilers#Bug#Concept-API
 dotnet,roslyn,5741,none,2.0 (RTM),16,Suppress detection for unnecessary 'using' directives if the namespace can't be resolved,True,Area-Compilers#Bug

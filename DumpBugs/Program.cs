@@ -9,6 +9,7 @@ using System.Collections.Immutable;
 using FileMode = System.IO.FileMode;
 using TheBugs;
 using System.Diagnostics;
+using System.Configuration;
 
 namespace DumpBugs
 {
@@ -82,8 +83,13 @@ namespace DumpBugs
 
         private static Credentials ReadCredentials()
         {
-            var text = File.ReadAllText(@"c:\users\jaredpar\github.txt").Trim();
-            var items = text.Split(':');
+            var setting = ConfigurationManager.AppSettings[Constants.GithubConnectionStringName];
+            if (setting == null)
+            {
+                return null;
+            }
+
+            var items = setting.Split(':');
             return new Credentials(items[0], items[1]);
         }
 
