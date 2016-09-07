@@ -11,5 +11,7 @@ namespace TheBugs
         public const string UnassignedName = "none";
 
         public const string GithubConnectionStringName = "thebugs-github-connection-string";
+
+        public const string StorageConnectionStringName = "thebugs-azure-storage-connection-string";
     }
 }
