@@ -31,7 +31,9 @@ namespace DumpBugs
 
                 var storageAccount = CloudStorageAccount.Parse(ConfigurationManager.AppSettings[Constants.StorageConnectionStringName]);
                 AzureUtil.EnsureAzureResources(storageAccount);
-                var table = storageAccount.CreateCloudTableClient().GetTableReference(AzureConstants.TableNames.RoachIssueTable);
+                var tableClient = storageAccount.CreateCloudTableClient();
+                var table = tableClient.GetTableReference(AzureConstants.TableNames.RoachIssueTable);
+                var milestoneTable = tableClient.GetTableReference(AzureConstants.TableNames.RoachIssueTable);
 
                 var queryUtil = new QueryUtil(client);
                 var repo = await client.Repository.Get("dotnet", "roslyn");
@@ -53,9 +55,13 @@ namespace DumpBugs
                     }
                 }
 
-                Console.WriteLine("Inserting into Azure tables");
+                Console.WriteLine("Inserting issues into Azure Table");
                 var entityList = list.Select(x => new RoachIssueEntity(x)).ToList();
                 await AzureUtil.InsertBatchUnordered(table, entityList);
+
+                Console.WriteLine("Inserting milestones into Azure table");
+                var milestoneEntityList = list.Select(x => x.Milestone).Distinct().Select(x => new RoachMilestoneEntity(x)).ToList();
+                await AzureUtil.InsertBatchUnordered(milestoneTable, milestoneEntityList);
 
                 return 0;
             }

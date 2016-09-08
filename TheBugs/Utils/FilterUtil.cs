@@ -5,11 +5,11 @@ using System.Web;
 
 namespace TheBugs.Utils
 {
-    internal static class FilterUtil
+    public static class FilterUtil
     {
-        internal static class CompilerTeam
+        public static class CompilerTeam
         {
-            internal static bool AssignedToTeam(RoachIssue issue)
+            public static bool AssignedToTeam(RoachIssue issue)
             {
                 switch (issue.Assignee.ToLower())
                 {
@@ -27,12 +27,12 @@ namespace TheBugs.Utils
                 }
             }
 
-            internal static bool AssignedToArea(RoachIssue issue)
+            public static bool AssignedToArea(RoachIssue issue)
             {
                 return issue.Labels.Contains("Area-Compilers");
             }
 
-            internal static bool IsIssue(RoachIssue issue)
+            public static bool IsIssue(RoachIssue issue)
             {
                 if (IsNotBug(issue))
                 {
@@ -54,9 +54,9 @@ namespace TheBugs.Utils
 
         }
 
-        internal static class IdeTeam
+        public static class IdeTeam
         {
-            internal static bool AssignedToTeam(RoachIssue issue)
+            public static bool AssignedToTeam(RoachIssue issue)
             {
                 switch (issue.Assignee.ToLower())
                 {
@@ -76,12 +76,12 @@ namespace TheBugs.Utils
                 }
             }
 
-            internal static bool AssignedToArea(RoachIssue issue)
+            public static bool AssignedToArea(RoachIssue issue)
             {
                 return issue.Labels.Contains("Area-Ide");
             }
 
-            internal static bool IsIssue(RoachIssue issue)
+            public static bool IsIssue(RoachIssue issue)
             {
                 if (IsNotBug(issue))
                 {
@@ -103,11 +103,36 @@ namespace TheBugs.Utils
 
         }
 
-        internal static bool IsNotBug(RoachIssue issue)
+        public static bool IsNotBug(RoachIssue issue)
         {
+            if (!issue.IsOpen)
+            {
+                return false;
+            }
+
             return
                 issue.Labels.Contains("Documentation") ||
                 issue.Labels.Contains("Question");
+        }
+
+        public static IEnumerable<RoachIssue> Filter(
+            IEnumerable<RoachIssue> issues,
+            string view)
+        {
+            if (view != null)
+            {
+                switch (view)
+                {
+                    case "jaredpar":
+                        issues = issues.Where(x => FilterUtil.CompilerTeam.IsIssue(x));
+                        break;
+                    case "pilchie":
+                        issues = issues.Where(x => FilterUtil.IdeTeam.IsIssue(x));
+                        break;
+                }
+            }
+
+            return issues;
         }
     }
 }

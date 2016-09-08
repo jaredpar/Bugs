@@ -11,10 +11,12 @@ namespace TheBugs.Storage
         public static class TableNames
         {
             public const string RoachIssueTable = "RoachIssues";
+            public const string RoachMilestoneTable = "RoachMilestones";
 
             public static IEnumerable<string> All()
             {
                 yield return RoachIssueTable;
+                yield return RoachMilestoneTable;
             }
         }
 
@@ -28,9 +30,11 @@ namespace TheBugs.Storage
 
         public static class QueueNames
         {
+            public const string IssueChanged = "issuechanged";
+
             public static IEnumerable<string> All()
             {
-                yield break;
+                yield return IssueChanged;
             }
         }
     }

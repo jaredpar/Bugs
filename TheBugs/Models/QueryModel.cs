@@ -29,8 +29,8 @@ namespace TheBugs.Models
             Assignee = assignee;
         }
 
+        /*
         public static QueryModel Create(
-            DataStorage storage, 
             string actionName,
             string assignee = null, 
             List<int> milestones = null,
@@ -43,5 +43,6 @@ namespace TheBugs.Models
                 view: view,
                 milestones: milestones == null ? ImmutableArray<int>.Empty : milestones.ToImmutableArray());
         }
+        */
     }
 }

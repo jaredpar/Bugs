@@ -23,6 +23,17 @@ namespace TheBugs
 
         }
 
+        public static RoachRepoId ParseFullName(string fullName)
+        {
+            var parts = fullName.Split('/');
+            if (parts.Length != 2)
+            {
+                throw new Exception($"Repo full name not in expected format: {fullName}");
+            }
+
+            return new RoachRepoId(parts[0], parts[1]);
+        }
+
         public static bool operator==(RoachRepoId left, RoachRepoId right) => left.Owner == right.Owner && left.Name == right.Name;
         public static bool operator!=(RoachRepoId left, RoachRepoId right) => !(left == right);
         public bool Equals(RoachRepoId other) => this == other;

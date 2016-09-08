@@ -286,5 +286,15 @@ namespace TheBugs.Storage
 
             return list;
         }
+
+        public static async Task<List<T>> QueryAsync<T>(
+            CloudTable table,
+            FilterUtil filterUtil,
+            CancellationToken cancellationToken = default(CancellationToken))
+            where T : ITableEntity, new()
+        {
+            var query = new TableQuery<T>().Where(filterUtil.Filter);
+            return await QueryAsync(table, query, cancellationToken);
+        }
     }
 }

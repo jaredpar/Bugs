@@ -45,7 +45,7 @@ namespace TheBugs
                     var issue = new RoachIssue(
                         id: issueId,
                         assignee: next(),
-                        milestone: new RoachMilestone(next(), int.Parse(next())),
+                        milestone: new RoachMilestone(repoId, next(), int.Parse(next())),
                         title: next(),
                         isOpen: bool.Parse(next()),
                         labels: DecodeList(next()).ToImmutableArray());

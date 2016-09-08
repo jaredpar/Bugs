@@ -91,7 +91,9 @@
     <Compile Include="Storage\EntityKeyUtil.cs" />
     <Compile Include="Storage\Extensions.cs" />
     <Compile Include="Storage\FilterUtil.cs" />
+    <Compile Include="Storage\IssueQueryUtil.cs" />
     <Compile Include="Storage\RoachIssueEntity.cs" />
+    <Compile Include="Storage\RoachMilestoneEntity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">

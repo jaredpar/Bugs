@@ -35,7 +35,7 @@ namespace TheBugs
         public RoachIssue(Repository repo, Issue issue) : this(
             new RoachIssueId(repo, issue), 
             issue.Assignee?.Login ?? Constants.UnassignedName, 
-            new RoachMilestone(issue.Milestone),
+            new RoachMilestone(repo, issue.Milestone),
             issue.Title, 
             issue.State == ItemState.Open, 
             issue.Labels.Select(x => x.Name).ToImmutableArray())

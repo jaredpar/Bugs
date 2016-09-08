@@ -12,14 +12,14 @@ namespace TheBugs.Storage
     {
         public int Number { get; set; }
         public string Assignee { get; set; }
-        public string MilestoneTitle { get; }
-        public int MilestoneNumber { get; }
-        public string Title { get; }
+        public string MilestoneTitle { get; set; }
+        public int MilestoneNumber { get; set; }
+        public string Title { get; set; }
         public bool IsOpen { get; set; }
-        public string LabelsRaw;
+        public string LabelsRaw { get; set; }
 
         public RoachRepoId RepoId => EntityKeyUtil.ParseRoachRepoIdKey(PartitionKey);
-        public RoachMilestone Milestone => new RoachMilestone(MilestoneTitle, MilestoneNumber);
+        public RoachMilestone Milestone => new RoachMilestone(RepoId, MilestoneTitle, MilestoneNumber);
         public IEnumerable<string> Labels => LabelsRaw.Split('#');
         public RoachIssueId IssueId => new RoachIssueId(RepoId, Number);
         public RoachIssue Issue => new RoachIssue(IssueId, Assignee, Milestone, Title, IsOpen, Labels);
@@ -31,8 +31,8 @@ namespace TheBugs.Storage
 
         public RoachIssueEntity(RoachIssue issue)
         {
-            PartitionKey = EntityKeyUtil.ToKey(issue.RepoId);
-            RowKey = issue.Number.ToString();
+            PartitionKey = GetPartitionKey(issue.RepoId);
+            RowKey = GetRowKey(issue.Id);
 
             Number = issue.Number;
             Assignee = issue.Assignee;
@@ -42,5 +42,9 @@ namespace TheBugs.Storage
             IsOpen = issue.IsOpen;
             LabelsRaw = string.Join("#", issue.Labels);
         }
+
+        public static string GetPartitionKey(RoachRepoId repoId) => EntityKeyUtil.ToKey(repoId);
+        public static string GetRowKey(int number) => number.ToString();
+        public static string GetRowKey(RoachIssueId id) => GetRowKey(id.Number).ToString();
     }
 }
