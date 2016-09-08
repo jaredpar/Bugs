@@ -2,14 +2,14 @@
 @model QueryModel
 
 @{
-    var allSelected = Model.Milestones.Length == 0 ? @"selected=""true""" : "";
+    var allSelected = Model.Milestones.Count == 0 ? @"selected=""true""" : "";
 
     var items = new List<SelectListItem>();
     items.Add(new SelectListItem()
     {
         Text = "All",
         Value = "",
-        Selected = Model.Milestones.Length == 0
+        Selected = Model.Milestones.Count == 0
     });
 
     foreach (var milestone in Model.AllMilestones)

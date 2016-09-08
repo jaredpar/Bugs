@@ -33,19 +33,20 @@ namespace TheBugs.Controllers
             return RedirectToAction(nameof(List));
         }
 
-        public ActionResult Graph(string assignee = null, string view = null, List<int> milestones = null)
+        public async Task<ActionResult> Graph(string assignee = null, string view = null, List<int> milestones = null)
         {
-            return RunCore(nameof(Graph), assignee, view, milestones);
+            var model = await RunCore(nameof(Graph), assignee, view, milestones);
+            return View(model);
         }
 
-        public ActionResult List(string assignee = null, string view = null, List<int> milestones = null)
+        public async Task<ActionResult> List(string assignee = null, string view = null, List<int> milestones = null)
         {
-            return RunCore(nameof(List), assignee, view, milestones);
+            var model = await RunCore(nameof(List), assignee, view, milestones);
+            return View(model);
         }
 
-        private ActionResult RunCore(string actionName, string assignee = null, string view = null, List<int> milestones = null, CancellationToken cancellationToken = default(CancellationToken))
+        private async Task<ListModel> RunCore(string actionName, string assignee = null, string view = null, List<int> milestones = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            /*
             // Case of parameter binding where milestone= is passed without a value.
             if (milestones != null && milestones.Count == 1 && milestones[0] == 0)
             {
@@ -53,15 +54,14 @@ namespace TheBugs.Controllers
             }
 
             var repoId = new RoachRepoId("dotnet", "roslyn");
-            var queryUtil = new IssueQueryUtil(_storageAccount.CreateCloudTableClient());
-            var issues = await queryUtil.GetIssues(reopId, actionName, assignee, milestones, cancellationToken);
-            var milestones = await queryUtil.GetMilestones(repoId);
-            var query = QueryModel.Create(storage, actionName: actionName, assignee: assignee, view: view, milestones: milestones);
-            var issues = storage.Filter(assignee, view, query.Milestones);
-            var model = new ListModel(query, issues.ToList());
-            return View(model);
-            */
-            return null;
+            var queryUtil = new StorageQueryUtil(_storageAccount.CreateCloudTableClient());
+            var foundIssues = await queryUtil.GetIssues(repoId, assignee, milestones, cancellationToken);
+            var foundMilestones = await queryUtil.GetMilestones(repoId, cancellationToken);
+
+            // var milestones = await queryUtil.GetMilestones(repoId);
+            var query = new QueryModel(actionName, foundMilestones, view, assignee, milestones);
+            var issues = SpecificFilterUtil.Filter(foundIssues, view);
+            return new ListModel(query, issues.ToList());
         }
     }
 }

@@ -28,9 +28,12 @@ namespace TheBugs.Jobs
                 : RoachMilestone.CreateNone(repoId);
             var isOpen = issueMessage.State == "open";
             var roachIssue = new RoachIssue(issueId, issueMessage.Assignee, milestone, issueMessage.Title, isOpen, issueMessage.Labels);
-            var entity = new RoachIssueEntity(roachIssue);
-            var operation = TableOperation.InsertOrReplace(entity);
-            await table.ExecuteAsync(operation, cancellationToken);
+            var issueEntity = new RoachIssueEntity(roachIssue);
+            var operation = TableOperation.InsertOrReplace(issueEntity);
+            await table.ExecuteAsync(TableOperation.InsertOrReplace(issueEntity), cancellationToken);
+
+            var milestoneEntity = new RoachMilestoneEntity(milestone);
+            await table.ExecuteAsync(TableOperation.InsertOrReplace(milestoneEntity), cancellationToken);
         }
     }
 }

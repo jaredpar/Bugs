@@ -10,7 +10,7 @@ namespace TheBugs.Storage
     {
         public static string ToKey(RoachRepoId id)
         {
-            return $"{id.Name}-{id.Owner}";
+            return $"{id.Owner}-{id.Name}";
         }
 
         public static RoachRepoId ParseRoachRepoIdKey(string key)

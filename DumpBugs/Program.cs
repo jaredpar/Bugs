@@ -33,7 +33,7 @@ namespace DumpBugs
                 AzureUtil.EnsureAzureResources(storageAccount);
                 var tableClient = storageAccount.CreateCloudTableClient();
                 var table = tableClient.GetTableReference(AzureConstants.TableNames.RoachIssueTable);
-                var milestoneTable = tableClient.GetTableReference(AzureConstants.TableNames.RoachIssueTable);
+                var milestoneTable = tableClient.GetTableReference(AzureConstants.TableNames.RoachMilestoneTable);
 
                 var queryUtil = new QueryUtil(client);
                 var repo = await client.Repository.Get("dotnet", "roslyn");
@@ -60,7 +60,11 @@ namespace DumpBugs
                 await AzureUtil.InsertBatchUnordered(table, entityList);
 
                 Console.WriteLine("Inserting milestones into Azure table");
-                var milestoneEntityList = list.Select(x => x.Milestone).Distinct().Select(x => new RoachMilestoneEntity(x)).ToList();
+                var milestoneEntityList = list
+                    .Select(x => x.Milestone)
+                    .GroupBy(x => x.Number)
+                    .Select(x => new RoachMilestoneEntity(x.First()))
+                    .ToList();
                 await AzureUtil.InsertBatchUnordered(milestoneTable, milestoneEntityList);
 
                 return 0;

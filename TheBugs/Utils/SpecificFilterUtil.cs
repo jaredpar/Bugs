@@ -5,7 +5,7 @@ using System.Web;
 
 namespace TheBugs.Utils
 {
-    public static class FilterUtil
+    public static class SpecificFilterUtil
     {
         public static class CompilerTeam
         {
@@ -124,10 +124,10 @@ namespace TheBugs.Utils
                 switch (view)
                 {
                     case "jaredpar":
-                        issues = issues.Where(x => FilterUtil.CompilerTeam.IsIssue(x));
+                        issues = issues.Where(x => SpecificFilterUtil.CompilerTeam.IsIssue(x));
                         break;
                     case "pilchie":
-                        issues = issues.Where(x => FilterUtil.IdeTeam.IsIssue(x));
+                        issues = issues.Where(x => SpecificFilterUtil.IdeTeam.IsIssue(x));
                         break;
                 }
             }

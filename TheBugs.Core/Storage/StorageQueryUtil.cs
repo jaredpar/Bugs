@@ -10,12 +10,15 @@ using System.Threading.Tasks;
 
 namespace TheBugs.Storage
 {
-    public sealed class IssueQueryUtil
+    /// <summary>
+    /// Responsible for running queries over our table storage.
+    /// </summary>
+    public sealed class StorageQueryUtil
     {
         private readonly CloudTable _issueTable;
         private readonly CloudTable _milestoneTable;
 
-        public IssueQueryUtil(CloudTableClient tableClient)
+        public StorageQueryUtil(CloudTableClient tableClient)
         {
             _issueTable = tableClient.GetTableReference(AzureConstants.TableNames.RoachIssueTable);
             _milestoneTable = tableClient.GetTableReference(AzureConstants.TableNames.RoachMilestoneTable);
@@ -43,9 +46,10 @@ namespace TheBugs.Storage
 
         private async Task<List<RoachIssueEntity>> GetIssuesInMilestones(RoachRepoId repoId, List<int> milestones, CancellationToken cancellationToken)
         {
-            if (milestones.Count == 0)
+            if (milestones == null || milestones.Count == 0)
             {
-                return await GetIssuesInMilestone(repoId, 0, cancellationToken);
+                // Return all of the issues
+                return await AzureUtil.QueryAsync<RoachIssueEntity>(_issueTable, FilterUtil.PartitionKey(RoachIssueEntity.GetPartitionKey(repoId)), cancellationToken);
             }
 
             var list = new List<RoachIssueEntity>();
