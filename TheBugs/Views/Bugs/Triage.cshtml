@@ -1,0 +1,12 @@
+﻿@using TheBugs.Models
+@model List<RoachIssue>
+
+<h2>Triage Issues</h2>
+<h3>Total @Model.Count</h3>
+
+@Html.Partial("PartialIssueList", Model)
+
+
+
+
+

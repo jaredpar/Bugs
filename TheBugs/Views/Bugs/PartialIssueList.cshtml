@@ -1,0 +1,25 @@
+﻿@using TheBugs.Models
+@model List<RoachIssue>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Number</th>
+            <th>Title</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var issue in Model)
+        {
+            <tr>
+                <td><a href="@issue.Url">@issue.Number</a></td>
+                <td>@issue.Title</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+
+

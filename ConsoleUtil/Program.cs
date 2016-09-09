@@ -26,8 +26,10 @@ namespace ConsoleUtil
                 var storageAccount = SharedUtil.CreateStorageAccount();
 
                 // await DumpHooks(client);
+                // await DumpMilestones(client);
                 // await PrintRateLimits(client);
                 await TestRateLimits(client, storageAccount);
+                // await FixNulls(storageAccount);
                 return 0;
             }
             catch (Exception ex)
@@ -57,11 +59,28 @@ namespace ConsoleUtil
             await PrintRateLimits(client);
 
             var populator = new StoragePopulator(client, storageAccount.CreateCloudTableClient());
-            await populator.Populate(SharedUtil.RepoId, SharedUtil.MilestoneTitles);
+            await populator.Populate(SharedUtil.RepoId, SharedUtil.PopulateMilestoneTitles);
 
             Console.WriteLine("After");
             await PrintRateLimits(client);
+        }
 
+        private static async Task FixNulls(CloudStorageAccount storageAccount)
+        {
+            var table = storageAccount.CreateCloudTableClient().GetTableReference(AzureConstants.TableNames.RoachIssueTable);
+            var filter = FilterUtil.PartitionKey(EntityKeyUtil.ToKey(SharedUtil.RepoId));
+            var list = await AzureUtil.QueryAsync<RoachIssueEntity>(table, filter);
+            var bad = list.Where(x => x.Assignee == null).ToList();
+            await AzureUtil.DeleteBatchUnordered(table, bad);
+        }
+
+        private static async Task DumpMilestones(GitHubClient client)
+        {
+            var milestones = await client.Issue.Milestone.GetAllForRepository("dotnet", "roslyn");
+            foreach (var m in milestones)
+            {
+                Console.WriteLine($"{m.Number} - {m.Title}");
+            }
         }
 
         private static async Task DumpHooks(GitHubClient client)

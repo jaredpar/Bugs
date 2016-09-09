@@ -35,6 +35,36 @@ namespace TheBugs.Storage
             _milestoneTable = milestoneTable;
         }
 
+        /// <summary>
+        /// Get all issues in the specified label which don't have an assignee and / or a milestone.
+        /// </summary>
+        public async Task<List<RoachIssue>> GetTriageIssues(RoachRepoId repoId, string label, CancellationToken cancellationToken)
+        {
+            var unassignedFilter = TableQuery.CombineFilters(
+                TableQuery.GenerateFilterCondition(nameof(TableEntity.PartitionKey), QueryComparisons.Equal, EntityKeyUtil.ToKey(repoId)),
+                TableOperators.And,
+                TableQuery.GenerateFilterCondition(nameof(RoachIssueEntity.Assignee), QueryComparisons.Equal, TheBugsConstants.UnassignedName));
+            var unassignedList = await AzureUtil.QueryAsync(_issueTable, new TableQuery<RoachIssueEntity>().Where(unassignedFilter), cancellationToken);
+
+            var unknownMilestoneFilter = TableQuery.CombineFilters(
+                TableQuery.GenerateFilterCondition(nameof(TableEntity.PartitionKey), QueryComparisons.Equal, EntityKeyUtil.ToKey(repoId)),
+                TableOperators.And,
+                TableQuery.GenerateFilterConditionForInt(nameof(RoachIssueEntity.MilestoneNumber), QueryComparisons.Equal, RoachMilestone.NoneNumber));
+            var unknownMilestoneList = await AzureUtil.QueryAsync(_issueTable, new TableQuery<RoachIssueEntity>().Where(unknownMilestoneFilter), cancellationToken);
+
+            var list = new List<RoachIssue>();
+            var hashSet = new HashSet<int>();
+            foreach (var entity in unassignedList.Concat(unknownMilestoneList))
+            {
+                if (hashSet.Add(entity.Number) && entity.Labels.Contains(label))
+                {
+                    list.Add(entity.Issue);
+                }
+            }
+
+            return list;
+        }
+
         public async Task<List<RoachMilestone>> GetMilestones(RoachRepoId repoId, CancellationToken cancellationToken)
         {
             var list = await AzureUtil.QueryAsync<RoachMilestoneEntity>(

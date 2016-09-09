@@ -33,7 +33,7 @@ namespace DumpBugs
 
                 var repo = await client.Repository.Get("dotnet", "roslyn");
                 var storagePopulator = new StoragePopulator(client, tableClient);
-                await storagePopulator.Populate(new RoachRepoId("dotnet", "roslyn"), SharedUtil.MilestoneTitles);
+                await storagePopulator.Populate(new RoachRepoId("dotnet", "roslyn"), SharedUtil.DisplayMilestoneTitles);
 
                 return 0;
             }

@@ -45,6 +45,18 @@ namespace TheBugs.Controllers
             return View(model);
         }
 
+        public async Task<ActionResult> Triage(string label = null)
+        {
+            if (label == null)
+            {
+                return RedirectToAction(nameof(Triage), new { label = SharedUtil.Label });
+            }
+
+            var queryUtil = new StorageQueryUtil(_storageAccount.CreateCloudTableClient());
+            var issues = await queryUtil.GetTriageIssues(SharedUtil.RepoId, label, CancellationToken.None);
+            return View(issues);
+        }
+
         private async Task<ListModel> RunCore(string actionName, string assignee = null, string view = null, List<int> milestones = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Case of parameter binding where milestone= is passed without a value.
@@ -53,7 +65,7 @@ namespace TheBugs.Controllers
                 milestones.Clear();
             }
 
-            var repoId = new RoachRepoId("dotnet", "roslyn");
+            var repoId = SharedUtil.RepoId;
             var queryUtil = new StorageQueryUtil(_storageAccount.CreateCloudTableClient());
             var foundIssues = await queryUtil.GetIssues(repoId, assignee, milestones, cancellationToken);
             var foundMilestones = await queryUtil.GetMilestones(repoId, cancellationToken);

@@ -28,7 +28,7 @@
 
 <div id="pie_chart" style="width: 900px; height: 500px" data-title="@title" data-header="@header" data-values="@builder.ToString()" ></div>
 
-@Html.Partial("QueryFilter", Model.QueryModel)
+@Html.Partial("PartialQueryFilter", Model.QueryModel)
 
 @section scripts {
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>

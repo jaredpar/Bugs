@@ -48,7 +48,7 @@ namespace TheBugs.Jobs
         {
             var client = SharedUtil.CreateGitHubClient();
             var storagePopulator = new StoragePopulator(client, issueTable, milestoneTable);
-            await storagePopulator.Populate(SharedUtil.RepoId, SharedUtil.MilestoneTitles, cancellationToken);
+            await storagePopulator.Populate(SharedUtil.RepoId, SharedUtil.PopulateMilestoneTitles, cancellationToken);
         }
     }
 }
