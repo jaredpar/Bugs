@@ -53,6 +53,14 @@ namespace TheBugs
             return all.Where(x => milestoneNumbers.Contains(x.Number));
         }
 
+        public async Task<List<Issue>> GetIssuesInMilestone(RoachMilestone milestone)
+        {
+            var repo = await _client.Repository.Get(milestone.RepoId.Owner, milestone.RepoId.Name);
+            var request = new RepositoryIssueRequest();
+            request.Milestone = $"{milestone.Number}";
+            return await GetIssues(repo, request);
+        }
+
         public async Task<IEnumerable<Milestone>> GetMilestones(RoachRepoId repoId, IEnumerable<string> milestoneTitles)
         {
             var all = await GetMilestones(repoId);

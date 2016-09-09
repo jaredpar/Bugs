@@ -34,14 +34,19 @@ namespace TheBugs
             UpdatedAt = updatedAt;
         }
 
-        public RoachIssue(Repository repo, Issue issue) : this(
-            new RoachIssueId(repo, issue), 
+        public RoachIssue(RoachRepoId repoId, Issue issue) : this(
+            new RoachIssueId(repoId, issue.Number),
             issue.Assignee?.Login ?? TheBugsConstants.UnassignedName, 
-            new RoachMilestone(repo, issue.Milestone),
+            new RoachMilestone(repoId, issue.Milestone),
             issue.Title, 
             issue.State == ItemState.Open, 
             issue.Labels.Select(x => x.Name).ToImmutableArray(),
             issue.UpdatedAt)
+        {
+
+        }
+
+        public RoachIssue(Repository repo, Issue issue) : this(new RoachRepoId(repo), issue)
         {
 
         }

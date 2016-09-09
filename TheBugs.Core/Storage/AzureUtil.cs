@@ -141,6 +141,21 @@ namespace TheBugs.Storage
 
 
         /// <summary>
+        /// Delete a raw list that is not grouped by partition keys.
+        /// </summary>
+        public static async Task DeleteBatchUnordered(CloudTable table, IEnumerable<EntityKey> entityKeyList)
+        {
+            var entityList = entityKeyList.Select(key =>
+            {
+                var entity = new DynamicTableEntity(key.PartitionKey, key.RowKey);
+                entity.ETag = "*";
+                return entity;
+            });
+
+            await DeleteBatchUnordered(table, entityList);
+        }
+
+        /// <summary>
         /// Delete a raw list that is not grouped by partition keys. 
         /// </summary>
         public static async Task DeleteBatchUnordered<T>(CloudTable table, IEnumerable<T> entityList)

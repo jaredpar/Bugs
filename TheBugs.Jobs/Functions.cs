@@ -31,7 +31,7 @@ namespace TheBugs.Jobs
             var updatedAt = issueMessage.UpdatedAt != null
                 ? DateTimeOffset.Parse(issueMessage.UpdatedAt)
                 : (DateTimeOffset?)null;
-            var roachIssue = new RoachIssue(issueId, issueMessage.Assignee, milestone, issueMessage.Title, isOpen, issueMessage.Labels, updatedAt);
+            var roachIssue = new RoachIssue(issueId, issueMessage.Assignee ?? TheBugsConstants.UnassignedName, milestone, issueMessage.Title, isOpen, issueMessage.Labels, updatedAt);
             var issueEntity = new RoachIssueEntity(roachIssue);
             var operation = TableOperation.InsertOrReplace(issueEntity);
             await table.ExecuteAsync(TableOperation.InsertOrReplace(issueEntity), cancellationToken);

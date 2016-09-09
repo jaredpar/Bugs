@@ -22,11 +22,16 @@ namespace TheBugs
             Number = number;
         }
 
-        public RoachMilestone(Repository repo, Milestone milestone)
+        public RoachMilestone(RoachRepoId repoId, Milestone milestone)
         {
-            RepoId = new RoachRepoId(repo);
+            RepoId = repoId;
             Title = milestone.Title;
             Number = milestone.Number;
+        }
+
+        public RoachMilestone(Repository repo, Milestone milestone) : this(new RoachRepoId(repo), milestone)
+        {
+
         }
 
         public static RoachMilestone CreateNone(RoachRepoId repoId)
