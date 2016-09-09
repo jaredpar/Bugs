@@ -44,7 +44,7 @@ namespace TheBugs.Utils
                     return true;
                 }
 
-                if (AssignedToArea(issue) && issue.Assignee == Constants.UnassignedName)
+                if (AssignedToArea(issue) && issue.Assignee == TheBugsConstants.UnassignedName)
                 {
                     return true;
                 }
@@ -93,7 +93,7 @@ namespace TheBugs.Utils
                     return true;
                 }
 
-                if (AssignedToArea(issue) && issue.Assignee == Constants.UnassignedName)
+                if (AssignedToArea(issue) && issue.Assignee == TheBugsConstants.UnassignedName)
                 {
                     return true;
                 }
@@ -107,12 +107,13 @@ namespace TheBugs.Utils
         {
             if (!issue.IsOpen)
             {
-                return false;
+                return true;
             }
 
             return
                 issue.Labels.Contains("Documentation") ||
-                issue.Labels.Contains("Question");
+                issue.Labels.Contains("Question") ||
+                issue.Labels.Contains("Area-Infrastructure");
         }
 
         public static IEnumerable<RoachIssue> Filter(

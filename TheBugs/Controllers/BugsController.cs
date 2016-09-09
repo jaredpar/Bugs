@@ -24,7 +24,7 @@ namespace TheBugs.Controllers
 
         public BugsController()
         {
-            var connectionString = CloudConfigurationManager.GetSetting(Constants.StorageConnectionStringName);
+            var connectionString = CloudConfigurationManager.GetSetting(TheBugsConstants.StorageConnectionStringName);
             _storageAccount = CloudStorageAccount.Parse(connectionString);
         }
 

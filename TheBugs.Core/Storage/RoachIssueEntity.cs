@@ -17,12 +17,14 @@ namespace TheBugs.Storage
         public string Title { get; set; }
         public bool IsOpen { get; set; }
         public string LabelsRaw { get; set; }
+        public DateTime UpdatedAtDateTime { get; set; }
 
         public RoachRepoId RepoId => EntityKeyUtil.ParseRoachRepoIdKey(PartitionKey);
         public RoachMilestone Milestone => new RoachMilestone(RepoId, MilestoneTitle, MilestoneNumber);
-        public IEnumerable<string> Labels => LabelsRaw.Split('#');
+        public IEnumerable<string> Labels => LabelsRaw != null ? LabelsRaw.Split('#') : new string[] { };
         public RoachIssueId IssueId => new RoachIssueId(RepoId, Number);
-        public RoachIssue Issue => new RoachIssue(IssueId, Assignee, Milestone, Title, IsOpen, Labels);
+        public DateTimeOffset? UpdatedAt => UpdatedAtDateTime == default(DateTime) ? (DateTimeOffset?)null : UpdatedAtDateTime;
+        public RoachIssue Issue => new RoachIssue(IssueId, Assignee, Milestone, Title, IsOpen, Labels, UpdatedAt);
 
         public RoachIssueEntity()
         {
@@ -41,6 +43,7 @@ namespace TheBugs.Storage
             Title = issue.Title;
             IsOpen = issue.IsOpen;
             LabelsRaw = string.Join("#", issue.Labels);
+            UpdatedAtDateTime = (issue.UpdatedAt ?? default(DateTimeOffset)).UtcDateTime;
         }
 
         public static string GetPartitionKey(RoachRepoId repoId) => EntityKeyUtil.ToKey(repoId);

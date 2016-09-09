@@ -26,46 +26,14 @@ namespace DumpBugs
         {
             try
             {
-                var client = new GitHubClient(new ProductHeaderValue("JaredsAmazingGithubBugClient"));
-                client.Credentials = ReadCredentials();
-
-                var storageAccount = CloudStorageAccount.Parse(ConfigurationManager.AppSettings[Constants.StorageConnectionStringName]);
+                var client = SharedUtil.CreateGitHubClient();
+                var storageAccount = CloudStorageAccount.Parse(ConfigurationManager.AppSettings[TheBugsConstants.StorageConnectionStringName]);
                 AzureUtil.EnsureAzureResources(storageAccount);
                 var tableClient = storageAccount.CreateCloudTableClient();
-                var table = tableClient.GetTableReference(AzureConstants.TableNames.RoachIssueTable);
-                var milestoneTable = tableClient.GetTableReference(AzureConstants.TableNames.RoachMilestoneTable);
 
-                var queryUtil = new QueryUtil(client);
                 var repo = await client.Repository.Get("dotnet", "roslyn");
-                var list = new List<RoachIssue>();
-
-                foreach (var title in GetMileStones())
-                {
-                    var milestone = await queryUtil.GetMilestone(repo, title);
-                    var request = new RepositoryIssueRequest()
-                    {
-                        Milestone = $"{milestone.Number}",
-                        Filter = IssueFilter.All,
-                    };
-
-                    var issues = await queryUtil.GetIssuesInMilestone(repo, milestone);
-                    foreach (var issue in issues)
-                    {
-                        list.Add(new RoachIssue(repo, issue));
-                    }
-                }
-
-                Console.WriteLine("Inserting issues into Azure Table");
-                var entityList = list.Select(x => new RoachIssueEntity(x)).ToList();
-                await AzureUtil.InsertBatchUnordered(table, entityList);
-
-                Console.WriteLine("Inserting milestones into Azure table");
-                var milestoneEntityList = list
-                    .Select(x => x.Milestone)
-                    .GroupBy(x => x.Number)
-                    .Select(x => new RoachMilestoneEntity(x.First()))
-                    .ToList();
-                await AzureUtil.InsertBatchUnordered(milestoneTable, milestoneEntityList);
+                var storagePopulator = new StoragePopulator(client, tableClient);
+                await storagePopulator.Populate(new RoachRepoId("dotnet", "roslyn"), SharedUtil.MilestoneTitles);
 
                 return 0;
             }
@@ -91,7 +59,7 @@ namespace DumpBugs
 
         private static Credentials ReadCredentials()
         {
-            var setting = ConfigurationManager.AppSettings[Constants.GithubConnectionStringName];
+            var setting = ConfigurationManager.AppSettings[TheBugsConstants.GithubConnectionStringName];
             if (setting == null)
             {
                 return null;

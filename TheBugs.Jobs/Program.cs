@@ -16,7 +16,7 @@ namespace TheBugs.Jobs
         // AzureWebJobsDashboard and AzureWebJobsStorage
         internal static void Main()
         {
-            var connectionString = CloudConfigurationManager.GetSetting(Constants.StorageConnectionStringName);
+            var connectionString = CloudConfigurationManager.GetSetting(TheBugsConstants.StorageConnectionStringName);
             var storageAccount = CloudStorageAccount.Parse(connectionString);
             AzureUtil.EnsureAzureResources(storageAccount);
 

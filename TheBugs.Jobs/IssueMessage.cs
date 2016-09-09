@@ -13,6 +13,7 @@ namespace TheBugs.Jobs
         public string MilestoneTitle { get; set; }
         public int MilestoneNumber { get; set; }
         public string Assignee { get; set; }
+        public string UpdatedAt { get; set; }
 
         /// <summary>
         /// This will have the name in the form dotnet/roslyn

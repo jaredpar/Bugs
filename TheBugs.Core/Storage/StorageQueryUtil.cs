@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using static TheBugs.Storage.AzureConstants;
 
 namespace TheBugs.Storage
 {
@@ -18,10 +19,20 @@ namespace TheBugs.Storage
         private readonly CloudTable _issueTable;
         private readonly CloudTable _milestoneTable;
 
-        public StorageQueryUtil(CloudTableClient tableClient)
+        public StorageQueryUtil(CloudTableClient tableClient) : this(
+            tableClient.GetTableReference(TableNames.RoachIssueTable),
+            tableClient.GetTableReference(TableNames.RoachMilestoneTable))
         {
-            _issueTable = tableClient.GetTableReference(AzureConstants.TableNames.RoachIssueTable);
-            _milestoneTable = tableClient.GetTableReference(AzureConstants.TableNames.RoachMilestoneTable);
+
+        }
+
+        public StorageQueryUtil(CloudTable issueTable, CloudTable milestoneTable)
+        {
+            Debug.Assert(issueTable.Name == TableNames.RoachIssueTable);
+            Debug.Assert(milestoneTable.Name == TableNames.RoachMilestoneTable);
+
+            _issueTable = issueTable;
+            _milestoneTable = milestoneTable;
         }
 
         public async Task<List<RoachMilestone>> GetMilestones(RoachRepoId repoId, CancellationToken cancellationToken)

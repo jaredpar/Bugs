@@ -16,13 +16,14 @@ namespace TheBugs
         public string Title { get; }
         public bool IsOpen { get; }
         public ImmutableArray<string> Labels;
+        public DateTimeOffset? UpdatedAt;
 
         public int Number => Id.Number;
         public RoachRepoId RepoId => Id.RepoId;
         public string UriString => $"https://github.com/{RepoId.Owner}/{RepoId.Name}/issues/{Number}";
         public Uri Url => new Uri(UriString);
 
-        public RoachIssue(RoachIssueId id, string assignee, RoachMilestone milestone, string title, bool isOpen, IEnumerable<string> labels)
+        public RoachIssue(RoachIssueId id, string assignee, RoachMilestone milestone, string title, bool isOpen, IEnumerable<string> labels, DateTimeOffset? updatedAt)
         {
             Id = id;
             Assignee = assignee;
@@ -30,15 +31,17 @@ namespace TheBugs
             Title = title;
             IsOpen = isOpen;
             Labels = labels.ToImmutableArray();
+            UpdatedAt = updatedAt;
         }
 
         public RoachIssue(Repository repo, Issue issue) : this(
             new RoachIssueId(repo, issue), 
-            issue.Assignee?.Login ?? Constants.UnassignedName, 
+            issue.Assignee?.Login ?? TheBugsConstants.UnassignedName, 
             new RoachMilestone(repo, issue.Milestone),
             issue.Title, 
             issue.State == ItemState.Open, 
-            issue.Labels.Select(x => x.Name).ToImmutableArray())
+            issue.Labels.Select(x => x.Name).ToImmutableArray(),
+            issue.UpdatedAt)
         {
 
         }

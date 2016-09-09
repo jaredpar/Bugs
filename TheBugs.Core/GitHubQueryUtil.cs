@@ -3,17 +3,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace TheBugs
 {
-    public sealed class QueryUtil
+    public sealed class GitHubQueryUtil
     {
-        internal const int DefaultPageSize = 50;
+        internal const int DefaultPageSize = 100;
 
         private readonly GitHubClient _client;
 
-        public QueryUtil(GitHubClient client)
+        public object ConfigurationManager { get; private set; }
+
+        public GitHubQueryUtil(GitHubClient client)
         {
             _client = client;
         }
@@ -39,6 +42,24 @@ namespace TheBugs
             return list;
         }
 
+        public async Task<IReadOnlyList<Milestone>> GetMilestones(RoachRepoId repoId)
+        {
+            return await _client.Issue.Milestone.GetAllForRepository(repoId.Owner, repoId.Name);
+        }
+
+        public async Task<IEnumerable<Milestone>> GetMilestones(RoachRepoId repoId, IEnumerable<int> milestoneNumbers)
+        {
+            var all = await GetMilestones(repoId);
+            return all.Where(x => milestoneNumbers.Contains(x.Number));
+        }
+
+        public async Task<IEnumerable<Milestone>> GetMilestones(RoachRepoId repoId, IEnumerable<string> milestoneTitles)
+        {
+            var all = await GetMilestones(repoId);
+            return all.Where(x => milestoneTitles.Contains(x.Title));
+        }
+
+        // TODO: delete rest or make them in terms of our API primitivess
         public async Task<List<Issue>> GetIssuesInMilestone(Repository repo, string milestoneTitle)
         {
             var milestone = await GetMilestone(repo, milestoneTitle);
