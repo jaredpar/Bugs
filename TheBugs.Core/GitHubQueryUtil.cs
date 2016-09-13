@@ -67,6 +67,16 @@ namespace TheBugs
             return all.Where(x => milestoneTitles.Contains(x.Title));
         }
 
+        public async Task<IReadOnlyList<Issue>> GetIssuesChangedSince(RoachRepoId repoId, DateTimeOffset since)
+        {
+            var request = new RepositoryIssueRequest()
+            {
+                Since = since
+            };
+            return await _client.Issue.GetAllForRepository(repoId.Owner, repoId.Name, request);
+        }
+
+
         // TODO: delete rest or make them in terms of our API primitivess
         public async Task<List<Issue>> GetIssuesInMilestone(Repository repo, string milestoneTitle)
         {

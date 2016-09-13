@@ -248,14 +248,14 @@ namespace TheBugs.Storage
             CloudTable table,
             EntityKey key,
             CancellationToken cancellationToken = default(CancellationToken))
-            where T : ITableEntity, new()
+            where T : class, ITableEntity, new()
         {
             var filter = FilterUtil.Key(key);
             var query = new TableQuery<T>().Where(filter);
             var segment = await table.ExecuteQuerySegmentedAsync(query, null, cancellationToken);
             if (segment.Results.Count == 0)
             {
-                return default(T);
+                return null;
             }
 
             return segment.Results[0];

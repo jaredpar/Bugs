@@ -90,6 +90,7 @@
     <Compile Include="Storage\EntityKeyUtil.cs" />
     <Compile Include="Storage\Extensions.cs" />
     <Compile Include="Storage\FilterUtil.cs" />
+    <Compile Include="Storage\RoachStatusEntity.cs" />
     <Compile Include="Storage\StoragePopulator.cs" />
     <Compile Include="Storage\StorageQueryUtil.cs" />
     <Compile Include="Storage\RoachIssueEntity.cs" />

@@ -61,6 +61,50 @@ namespace TheBugs.Storage
         }
 
         /// <summary>
+        /// Populates the issues tables to reflect changes that occured since the see cref="since"/> parameter.
+        /// </summary>
+        public async Task PopulateIssuesSince(RoachRepoId repoId, DateTimeOffset since, CancellationToken cancellationtoken = default(CancellationToken))
+        {
+            var changedIssues = await _githubQueryUtil.GetIssuesChangedSince(repoId, since);
+            var issueList = new List<RoachIssueEntity>(capacity: changedIssues.Count);
+
+            foreach (var changedIssue in changedIssues)
+            {
+                var issue = new RoachIssue(repoId, changedIssue);
+                issueList.Add(new RoachIssueEntity(issue));
+            }
+
+            // TODO: Need to thread through the CancellationToken here.
+            await AzureUtil.InsertBatchUnordered(_issueTable, issueList);
+        }
+
+        /// <summary>
+        /// Populates the milestone tableo to be equivalent to the current set of milestones on GitHub.
+        /// </summary>
+        public async Task PopulateMilestones(RoachRepoId repoId, CancellationToken cancellationtoken = default(CancellationToken))
+        {
+            var milestones = await _storageQueryUtil.GetMilestones(repoId, cancellationtoken);
+            var map = milestones.ToDictionary(x => x.Number);
+
+            var list = new List<RoachMilestoneEntity>();
+            foreach (var milestone in await _githubQueryUtil.GetMilestones(repoId))
+            {
+                RoachMilestone r;
+                if (!map.TryGetValue(milestone.Number, out r) || r.Title != milestone.Title)
+                {
+                    r = new RoachMilestone(repoId, milestone);
+                    list.Add(new RoachMilestoneEntity(r));
+                }
+            }
+
+            if (list.Count > 0)
+            {
+                // TODO: Need to thread through the CancellationToken here.
+                await AzureUtil.InsertBatchUnordered(_milestoneTable, list);
+            }
+        }
+
+        /// <summary>
         /// Ensure issues in the specified milestones are populated and up to date in the tables. 
         /// </summary>
         public async Task Populate(RoachRepoId repoId, IEnumerable<int> milestones, CancellationToken cancellationToken = default(CancellationToken))

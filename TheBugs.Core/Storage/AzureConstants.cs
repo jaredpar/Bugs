@@ -12,11 +12,13 @@ namespace TheBugs.Storage
         {
             public const string RoachIssueTable = "RoachIssues";
             public const string RoachMilestoneTable = "RoachMilestones";
+            public const string RoachStatusTable = "RoachStatusTable";
 
             public static IEnumerable<string> All()
             {
                 yield return RoachIssueTable;
                 yield return RoachMilestoneTable;
+                yield return RoachStatusTable;
             }
         }
 

@@ -40,15 +40,41 @@ namespace TheBugs.Jobs
             await table.ExecuteAsync(TableOperation.InsertOrReplace(milestoneEntity), cancellationToken);
         }
 
-        public static async Task GithubPopulate(
+        /// <summary>
+        /// Milestone information still does not come down as a part of events.  This function catches these types of 
+        /// update by doing a 'since' query on GitHub and bulk updating all of the changed values.  
+        /// </summary>
+        public static async Task GithubPopulateIssuesSince(
             [TimerTrigger("0 0/5 * * * *")] TimerInfo timerInfo,
             [Table(TableNames.RoachIssueTable)] CloudTable issueTable,
-            [Table(TableNames.RoachMilestoneTable)]CloudTable milestoneTable,
+            [Table(TableNames.RoachMilestoneTable)] CloudTable milestoneTable,
+            [Table(TableNames.RoachStatusTable)] CloudTable statusTable,
+            TextWriter logger,
             CancellationToken cancellationToken)
         {
             var client = SharedUtil.CreateGitHubClient();
             var storagePopulator = new StoragePopulator(client, issueTable, milestoneTable);
-            await storagePopulator.Populate(SharedUtil.RepoId, SharedUtil.PopulateMilestoneTitles, cancellationToken);
+
+            // TODO: Need to make this adaptable to all repos, not just dotnet/roslyn
+            var allRepos = new[] { SharedUtil.RepoId };
+            foreach (var repo in allRepos)
+            {
+                var statusEntity = await AzureUtil.QueryAsync<RoachStatusEntity>(statusTable, RoachStatusEntity.GetEntityKey(repo), cancellationToken);
+                if (statusEntity == null || statusEntity.LastBulkUpdate.Value == null)
+                {
+                    logger.WriteLine($"Repo {repo.Owner}/{repo.Name} does not have a status entry.  Cannot do a since update.");
+                    return;
+                }
+
+                var before = DateTimeOffset.UtcNow;
+                await storagePopulator.PopulateIssuesSince(repo, statusEntity.LastBulkUpdate.Value, cancellationToken);
+
+                // Given there are no events for milestones need to do a bulk update here. 
+                await storagePopulator.PopulateMilestones(repo, cancellationToken);
+
+                statusEntity.LastBulkUpdate = before;
+                await statusTable.ExecuteAsync(TableOperation.Replace(statusEntity), cancellationToken);
+            }
         }
     }
 }
