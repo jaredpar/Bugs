@@ -29,11 +29,11 @@ namespace ConsoleUtil
                 // await DumpHooks(client);
                 // await DumpMilestones(client);
                 // await PrintRateLimits(client);
-                // await TestRateLimits(client, storageAccount);
+                await TestRateLimits(client, storageAccount);
                 // await FixNulls(storageAccount);
                 // await DumpSince(client);
                 // await InitRepo(client, storageAccount, SharedUtil.RepoId);
-                await Misc(client, storageAccount);
+                // await Misc(client, storageAccount);
 
                 return 0;
             }

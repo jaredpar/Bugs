@@ -40,7 +40,7 @@ namespace TheBugs.Jobs
         /// update by doing a 'since' query on GitHub and bulk updating all of the changed values.  
         /// </summary>
         public static async Task GithubPopulateIssuesSince(
-            [TimerTrigger("0 0/5 * * * *")] TimerInfo timerInfo,
+            [TimerTrigger("0 0/1 * * * *")] TimerInfo timerInfo,
             [Table(TableNames.RoachIssueTable)] CloudTable issueTable,
             [Table(TableNames.RoachMilestoneTable)] CloudTable milestoneTable,
             [Table(TableNames.RoachStatusTable)] CloudTable statusTable,

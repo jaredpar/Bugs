@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace TheBugs
+namespace TheBugs.GitHub
 {
     public sealed class GitHubQueryUtil
     {
@@ -19,28 +19,6 @@ namespace TheBugs
         public GitHubQueryUtil(GitHubClient client)
         {
             _client = client;
-        }
-
-        // TODO: delete
-        public async Task<List<Issue>> GetIssues(Repository repo, IssueQuery query)
-        {
-            // TODO: need to handle unassigned bugs too. 
-
-            var list = new List<Issue>();
-            foreach (var member in query.Team)
-            {
-                foreach (var title in query.Milestones)
-                {
-                    var milestone = await GetMilestone(repo, title);
-                    var request = new RepositoryIssueRequest();
-                    request.Milestone = $"{milestone.Number}";
-                    request.Assignee = member;
-                    request.State = ItemStateFilter.Open;
-                    list.AddRange(await GetIssues(repo, request));
-                }
-            }
-
-            return list;
         }
 
         public async Task<IReadOnlyList<Milestone>> GetMilestones(RoachRepoId repoId)
@@ -61,10 +39,9 @@ namespace TheBugs
 
         public async Task<List<Issue>> GetIssuesInMilestone(RoachMilestone milestone)
         {
-            var repo = await _client.Repository.Get(milestone.RepoId.Owner, milestone.RepoId.Name);
             var request = new RepositoryIssueRequest();
             request.Milestone = $"{milestone.Number}";
-            return await GetIssues(repo, request);
+            return await GetIssues(milestone.RepoId, request);
         }
 
         public async Task<IEnumerable<Milestone>> GetMilestones(RoachRepoId repoId, IEnumerable<string> milestoneTitles)
@@ -82,48 +59,6 @@ namespace TheBugs
             return await _client.Issue.GetAllForRepository(repoId.Owner, repoId.Name, request);
         }
 
-
-        // TODO: delete rest or make them in terms of our API primitivess
-        public async Task<List<Issue>> GetIssuesInMilestone(Repository repo, string milestoneTitle)
-        {
-            var milestone = await GetMilestone(repo, milestoneTitle);
-            return await GetIssuesInMilestone(repo, milestone);
-        }
-
-        public async Task<List<Issue>> GetIssuesInMilestone(Repository repo, Milestone milestone)
-        {
-            var request = new RepositoryIssueRequest();
-            request.Milestone = $"{milestone.Number}";
-            return await GetIssues(repo, request);
-        }
-
-        public async Task<List<Issue>> GetIssuesWithLabel(Repository repo, string label)
-        {
-            var request = new RepositoryIssueRequest();
-            request.Labels.Add(label);
-            return await GetIssues(repo, request);
-        }
-
-        public async Task<Milestone> GetMilestone(Repository repo, string milestoneTitle)
-        {
-            var all = await _client.Issue.Milestone.GetAllForRepository(repo.Id);
-            var comparer = StringComparer.OrdinalIgnoreCase;
-            foreach (var item in all)
-            {
-                if (comparer.Equals(item.Title, milestoneTitle))
-                {
-                    return item;
-                }
-            }
-
-            throw new Exception($"Unable to find milestone with title {milestoneTitle}");
-        }
-
-        public async Task<List<Issue>> GetIssues(Repository repo, RepositoryIssueRequest request, int pageSize = DefaultPageSize)
-        {
-            var id = new RoachRepoId(repo);
-            return await GetIssues(repo, request, pageSize);
-        }
 
         public async Task<List<Issue>> GetIssues(RoachRepoId repo, RepositoryIssueRequest request, int pageSize = DefaultPageSize)
         {

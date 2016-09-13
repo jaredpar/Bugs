@@ -88,7 +88,7 @@ namespace TheBugs.Storage
                 _milestoneTable,
                 util,
                 cancellationToken);
-            return list.Select(x => x.Milestone).ToList();
+            return list.Select(x => x.Milestone).OrderBy(x => x.Title).ToList();
         }
 
         public async Task<List<RoachIssue>> GetIssues(RoachRepoId repoId, string assignee, List<int> milestones, CancellationToken cancellationToken)

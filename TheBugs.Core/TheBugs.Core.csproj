@@ -76,11 +76,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Constants.cs" />
+    <Compile Include="TheBugsConstants.cs" />
     <Compile Include="RoachIssue.cs" />
-    <Compile Include="IssueQuery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="GitHubQueryUtil.cs" />
+    <Compile Include="GitHub\GitHubQueryUtil.cs" />
     <Compile Include="RoachIssueId.cs" />
     <Compile Include="RoachItemState.cs" />
     <Compile Include="RoachMilestoneId.cs" />
