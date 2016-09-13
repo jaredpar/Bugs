@@ -28,8 +28,10 @@ namespace ConsoleUtil
                 // await DumpHooks(client);
                 // await DumpMilestones(client);
                 // await PrintRateLimits(client);
-                await TestRateLimits(client, storageAccount);
+                // await TestRateLimits(client, storageAccount);
                 // await FixNulls(storageAccount);
+                await DumpSince(client);
+               
                 return 0;
             }
             catch (Exception ex)
@@ -104,5 +106,19 @@ namespace ConsoleUtil
                 }
             }
         }
+
+        private static async Task DumpSince(GitHubClient client)
+        {
+            var date = DateTimeOffset.UtcNow - TimeSpan.FromHours(2);
+            var request = new RepositoryIssueRequest()
+            {
+                Since = date
+            };
+            var list = await client.Issue.GetAllForRepository("dotnet", "roslyn", request);
+            foreach (var item in list)
+            {
+                Console.WriteLine($"{item.Number} - {item.Title}");
+            }
+       } 
     }
 }
