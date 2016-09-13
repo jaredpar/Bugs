@@ -77,7 +77,7 @@ namespace TheBugs.Storage
                     util = util.And(FilterUtil.Column(nameof(RoachMilestoneEntity.IsOpen), false));
                     break;
                 case RoachItemFilter.Open:
-                    util = util.And(FilterUtil.Column(nameof(RoachMilestoneEntity.IsOpen), false));
+                    util = util.And(FilterUtil.Column(nameof(RoachMilestoneEntity.IsOpen), true));
                     break;
                 default:
                     throw new Exception($"Bad enum value {filter}");
