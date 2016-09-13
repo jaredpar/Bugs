@@ -13,11 +13,7 @@ namespace TheBugs.Storage
 
         public string OwnerName => PartitionKey;
         public string RepoName => RowKey;
-        public DateTimeOffset? LastBulkUpdate
-        {
-            get { return LastBulkUpdateRaw == default(DateTime) ? (DateTimeOffset?)null : LastBulkUpdateRaw; }
-            set { LastBulkUpdateRaw = value.Value != null ? value.Value.UtcDateTime : default(DateTime); }
-        }
+        public DateTimeOffset? LastBulkUpdate => LastBulkUpdateRaw == default(DateTime) ? (DateTimeOffset?)null : LastBulkUpdateRaw;
 
         public RoachStatusEntity()
         {
@@ -27,7 +23,12 @@ namespace TheBugs.Storage
         public RoachStatusEntity(RoachRepoId repoId, DateTimeOffset lastBulkUpdate)
         {
             this.SetEntityKey(GetEntityKey(repoId));
-            LastBulkUpdate = LastBulkUpdate;
+            SetLastBulkUpdate(lastBulkUpdate);
+        }
+
+        public void SetLastBulkUpdate(DateTimeOffset lastBulkUpdate)
+        {
+            LastBulkUpdateRaw = lastBulkUpdate.UtcDateTime;
         }
 
         public static EntityKey GetEntityKey(RoachRepoId id) => new EntityKey(id.Owner, id.Name);

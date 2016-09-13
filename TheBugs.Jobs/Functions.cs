@@ -24,20 +24,15 @@ namespace TheBugs.Jobs
 
             var repoId = RoachRepoId.ParseFullName(issueMessage.RepoFullName);
             var issueId = new RoachIssueId(repoId, issueMessage.Number);
-            var milestone = issueMessage.MilestoneTitle != null
-                ? new RoachMilestone(repoId, issueMessage.MilestoneTitle, issueMessage.MilestoneNumber)
-                : RoachMilestone.CreateNone(repoId);
+            var milestoneId = new RoachMilestoneId(repoId, issueMessage.MilestoneNumber);
             var isOpen = issueMessage.State == "open";
             var updatedAt = issueMessage.UpdatedAt != null
                 ? DateTimeOffset.Parse(issueMessage.UpdatedAt)
                 : (DateTimeOffset?)null;
-            var roachIssue = new RoachIssue(issueId, issueMessage.Assignee ?? TheBugsConstants.UnassignedName, milestone, issueMessage.Title, isOpen, issueMessage.Labels, updatedAt);
+            var roachIssue = new RoachIssue(issueId, issueMessage.Assignee ?? TheBugsConstants.UnassignedName, milestoneId, issueMessage.Title, isOpen, issueMessage.Labels, updatedAt);
             var issueEntity = new RoachIssueEntity(roachIssue);
             var operation = TableOperation.InsertOrReplace(issueEntity);
             await table.ExecuteAsync(TableOperation.InsertOrReplace(issueEntity), cancellationToken);
-
-            var milestoneEntity = new RoachMilestoneEntity(milestone);
-            await table.ExecuteAsync(TableOperation.InsertOrReplace(milestoneEntity), cancellationToken);
         }
 
         /// <summary>
@@ -72,7 +67,7 @@ namespace TheBugs.Jobs
                 // Given there are no events for milestones need to do a bulk update here. 
                 await storagePopulator.PopulateMilestones(repo, cancellationToken);
 
-                statusEntity.LastBulkUpdate = before;
+                statusEntity.SetLastBulkUpdate(before);
                 await statusTable.ExecuteAsync(TableOperation.Replace(statusEntity), cancellationToken);
             }
         }

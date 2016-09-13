@@ -21,6 +21,7 @@ namespace TheBugs
             _client = client;
         }
 
+        // TODO: delete
         public async Task<List<Issue>> GetIssues(Repository repo, IssueQuery query)
         {
             // TODO: need to handle unassigned bugs too. 
@@ -44,7 +45,12 @@ namespace TheBugs
 
         public async Task<IReadOnlyList<Milestone>> GetMilestones(RoachRepoId repoId)
         {
-            return await _client.Issue.Milestone.GetAllForRepository(repoId.Owner, repoId.Name);
+            var request = new MilestoneRequest()
+            {
+                State = ItemStateFilter.All
+            };
+
+            return await _client.Issue.Milestone.GetAllForRepository(repoId.Owner, repoId.Name, request);
         }
 
         public async Task<IEnumerable<Milestone>> GetMilestones(RoachRepoId repoId, IEnumerable<int> milestoneNumbers)
@@ -115,6 +121,12 @@ namespace TheBugs
 
         public async Task<List<Issue>> GetIssues(Repository repo, RepositoryIssueRequest request, int pageSize = DefaultPageSize)
         {
+            var id = new RoachRepoId(repo);
+            return await GetIssues(repo, request, pageSize);
+        }
+
+        public async Task<List<Issue>> GetIssues(RoachRepoId repo, RepositoryIssueRequest request, int pageSize = DefaultPageSize)
+        {
             var list = new List<Issue>();
             var options = new ApiOptions()
             {
@@ -128,8 +140,8 @@ namespace TheBugs
             do
             {
                 var pageIssues = request != null
-                    ? await issues.GetAllForRepository(repo.Id, request, options)
-                    : await issues.GetAllForRepository(repo.Id, options);
+                    ? await issues.GetAllForRepository(repo.Owner, repo.Name, request, options)
+                    : await issues.GetAllForRepository(repo.Owner, repo.Name, options);
                 list.AddRange(pageIssues);
                 if (pageIssues.Count < pageSize)
                 {

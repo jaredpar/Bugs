@@ -12,7 +12,6 @@ namespace TheBugs.Storage
     {
         public int Number { get; set; }
         public string Assignee { get; set; }
-        public string MilestoneTitle { get; set; }
         public int MilestoneNumber { get; set; }
         public string Title { get; set; }
         public bool IsOpen { get; set; }
@@ -20,11 +19,11 @@ namespace TheBugs.Storage
         public DateTime UpdatedAtDateTime { get; set; }
 
         public RoachRepoId RepoId => EntityKeyUtil.ParseRoachRepoIdKey(PartitionKey);
-        public RoachMilestone Milestone => new RoachMilestone(RepoId, MilestoneTitle, MilestoneNumber);
+        public RoachMilestoneId MilestoneId => new RoachMilestoneId(RepoId, MilestoneNumber);
         public IEnumerable<string> Labels => LabelsRaw != null ? LabelsRaw.Split('#') : new string[] { };
         public RoachIssueId IssueId => new RoachIssueId(RepoId, Number);
         public DateTimeOffset? UpdatedAt => UpdatedAtDateTime == default(DateTime) ? (DateTimeOffset?)null : UpdatedAtDateTime;
-        public RoachIssue Issue => new RoachIssue(IssueId, Assignee ?? TheBugsConstants.UnassignedName, Milestone, Title, IsOpen, Labels, UpdatedAt);
+        public RoachIssue Issue => new RoachIssue(IssueId, Assignee ?? TheBugsConstants.UnassignedName, MilestoneId, Title, IsOpen, Labels, UpdatedAt);
 
         public RoachIssueEntity()
         {
@@ -38,8 +37,7 @@ namespace TheBugs.Storage
 
             Number = issue.Number;
             Assignee = issue.Assignee;
-            MilestoneTitle = issue.Milestone.Title;
-            MilestoneNumber = issue.Milestone.Number;
+            MilestoneNumber = issue.MilestoneId.Number;
             Title = issue.Title;
             IsOpen = issue.IsOpen;
             LabelsRaw = string.Join("#", issue.Labels);

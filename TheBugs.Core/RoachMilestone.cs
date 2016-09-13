@@ -9,24 +9,41 @@ namespace TheBugs
 {
     public struct RoachMilestone
     {
-        public const int NoneNumber = 0;
+        public const string NoneTitle = "<none>";
 
-        public RoachRepoId RepoId { get; }
+        public RoachMilestoneId Id { get; }
         public string Title { get; }
-        public int Number { get; }
+        public bool IsOpen { get; }
 
-        public RoachMilestone(RoachRepoId repoId, string title, int number)
+        public RoachRepoId RepoId => Id.RepoId;
+        public int Number => Id.Number;
+
+        public RoachMilestone(RoachMilestoneId id, string title, bool isOpen)
         {
-            RepoId = repoId;
+            Id = id;
             Title = title;
-            Number = number;
+            IsOpen = isOpen;
+        }
+
+        public RoachMilestone(RoachRepoId repoId, int number, string title, bool isOpen) : this(new RoachMilestoneId(repoId, number), title, isOpen)
+        {
+
         }
 
         public RoachMilestone(RoachRepoId repoId, Milestone milestone)
         {
-            RepoId = repoId;
-            Title = milestone.Title;
-            Number = milestone.Number;
+            if (milestone != null)
+            {
+                Id = new RoachMilestoneId(repoId, milestone.Number);
+                Title = milestone.Title;
+                IsOpen = milestone.State == ItemState.Open;
+            }
+            else
+            {
+                Id = RoachMilestoneId.CreateNone(repoId);
+                Title = NoneTitle;
+                IsOpen = true;
+            }
         }
 
         public RoachMilestone(Repository repo, Milestone milestone) : this(new RoachRepoId(repo), milestone)
@@ -34,9 +51,5 @@ namespace TheBugs
 
         }
 
-        public static RoachMilestone CreateNone(RoachRepoId repoId)
-        {
-            return new RoachMilestone(repoId, "", NoneNumber);
-        }
     }
 }

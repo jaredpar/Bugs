@@ -11,9 +11,11 @@ namespace TheBugs.Storage
     {
         public int Number { get; set; }
         public string Title { get; set; }
+        public bool IsOpen { get; set; }
 
         public RoachRepoId RepoId => EntityKeyUtil.ParseRoachRepoIdKey(PartitionKey);
-        public RoachMilestone Milestone => new RoachMilestone(RepoId, Title, Number);
+        public RoachMilestoneId Id => new RoachMilestoneId(RepoId, Number);
+        public RoachMilestone Milestone => new RoachMilestone(Id, Title, IsOpen);
 
         public RoachMilestoneEntity()
         {
@@ -26,6 +28,7 @@ namespace TheBugs.Storage
             RowKey = GetRowKey(milestone);
             Number = milestone.Number;
             Title = milestone.Title;
+            IsOpen = milestone.IsOpen;
         }
 
         public static string GetPartitionKey(RoachRepoId repoId) => EntityKeyUtil.ToKey(repoId);

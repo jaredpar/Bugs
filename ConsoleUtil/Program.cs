@@ -24,14 +24,17 @@ namespace ConsoleUtil
             {
                 var client = SharedUtil.CreateGitHubClient();
                 var storageAccount = SharedUtil.CreateStorageAccount();
+                AzureUtil.EnsureAzureResources(storageAccount);
 
                 // await DumpHooks(client);
                 // await DumpMilestones(client);
                 // await PrintRateLimits(client);
                 // await TestRateLimits(client, storageAccount);
                 // await FixNulls(storageAccount);
-                await DumpSince(client);
-               
+                // await DumpSince(client);
+                // await InitRepo(client, storageAccount, SharedUtil.RepoId);
+                await Misc(client, storageAccount);
+
                 return 0;
             }
             catch (Exception ex)
@@ -61,7 +64,7 @@ namespace ConsoleUtil
             await PrintRateLimits(client);
 
             var populator = new StoragePopulator(client, storageAccount.CreateCloudTableClient());
-            await populator.Populate(SharedUtil.RepoId, SharedUtil.PopulateMilestoneTitles);
+            await populator.PopulateIssuesSince(SharedUtil.RepoId, DateTimeOffset.UtcNow - TimeSpan.FromHours(2));
 
             Console.WriteLine("After");
             await PrintRateLimits(client);
@@ -119,6 +122,17 @@ namespace ConsoleUtil
             {
                 Console.WriteLine($"{item.Number} - {item.Title}");
             }
-       } 
+        }
+
+        private static async Task InitRepo(GitHubClient client, CloudStorageAccount account, RoachRepoId id)
+        {
+            await RepoInitUtil.Initialize(id, client, account, Console.Out);
+        }
+
+        private static async Task Misc(GitHubClient client, CloudStorageAccount account)
+        {
+            var util = new StoragePopulator(client, account.CreateCloudTableClient());
+            await util.PopulateMilestones(SharedUtil.RepoId);
+        }
     }
 }

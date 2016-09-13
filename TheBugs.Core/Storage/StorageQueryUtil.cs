@@ -49,7 +49,7 @@ namespace TheBugs.Storage
             var unknownMilestoneFilter = TableQuery.CombineFilters(
                 TableQuery.GenerateFilterCondition(nameof(TableEntity.PartitionKey), QueryComparisons.Equal, EntityKeyUtil.ToKey(repoId)),
                 TableOperators.And,
-                TableQuery.GenerateFilterConditionForInt(nameof(RoachIssueEntity.MilestoneNumber), QueryComparisons.Equal, RoachMilestone.NoneNumber));
+                TableQuery.GenerateFilterConditionForInt(nameof(RoachIssueEntity.MilestoneNumber), QueryComparisons.Equal, RoachMilestoneId.NoneNumber));
             var unknownMilestoneList = await AzureUtil.QueryAsync(_issueTable, new TableQuery<RoachIssueEntity>().Where(unknownMilestoneFilter), cancellationToken);
 
             var list = new List<RoachIssue>();
@@ -65,11 +65,28 @@ namespace TheBugs.Storage
             return list;
         }
 
-        public async Task<List<RoachMilestone>> GetMilestones(RoachRepoId repoId, CancellationToken cancellationToken)
+        public async Task<List<RoachMilestone>> GetMilestones(RoachRepoId repoId, RoachItemFilter filter = RoachItemFilter.All, CancellationToken cancellationToken = default(CancellationToken))
         {
+            var util = FilterUtil.PartitionKey(RoachMilestoneEntity.GetPartitionKey(repoId));
+            switch (filter)
+            {
+                case RoachItemFilter.All:
+                    // Nothing to do:
+                    break;
+                case RoachItemFilter.Closed:
+                    util = util.And(FilterUtil.Column(nameof(RoachMilestoneEntity.IsOpen), false));
+                    break;
+                case RoachItemFilter.Open:
+                    util = util.And(FilterUtil.Column(nameof(RoachMilestoneEntity.IsOpen), false));
+                    break;
+                default:
+                    throw new Exception($"Bad enum value {filter}");
+            }
+
+
             var list = await AzureUtil.QueryAsync<RoachMilestoneEntity>(
                 _milestoneTable,
-                FilterUtil.PartitionKey(RoachMilestoneEntity.GetPartitionKey(repoId)),
+                util,
                 cancellationToken);
             return list.Select(x => x.Milestone).ToList();
         }

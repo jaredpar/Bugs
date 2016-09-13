@@ -68,7 +68,7 @@ namespace TheBugs.Controllers
             var repoId = SharedUtil.RepoId;
             var queryUtil = new StorageQueryUtil(_storageAccount.CreateCloudTableClient());
             var foundIssues = await queryUtil.GetIssues(repoId, assignee, milestones, cancellationToken);
-            var foundMilestones = await queryUtil.GetMilestones(repoId, cancellationToken);
+            var foundMilestones = await queryUtil.GetMilestones(repoId, RoachItemFilter.Open, cancellationToken);
 
             // var milestones = await queryUtil.GetMilestones(repoId);
             var query = new QueryModel(actionName, foundMilestones, view, assignee, milestones);
