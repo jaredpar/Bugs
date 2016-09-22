@@ -54,7 +54,8 @@ namespace TheBugs.GitHub
         {
             var request = new RepositoryIssueRequest()
             {
-                Since = since
+                Since = since,
+                State = ItemStateFilter.All,
             };
             return await _client.Issue.GetAllForRepository(repoId.Owner, repoId.Name, request);
         }

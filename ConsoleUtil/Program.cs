@@ -29,7 +29,8 @@ namespace ConsoleUtil
                 // await DumpHooks(client);
                 // await DumpMilestones(client);
                 // await PrintRateLimits(client);
-                await TestRateLimits(client, storageAccount);
+                // await TestRateLimits(client, storageAccount);
+                await PopulateSince();
                 // await FixNulls(storageAccount);
                 // await DumpSince(client);
                 // await InitRepo(client, storageAccount, SharedUtil.RepoId);
@@ -86,6 +87,18 @@ namespace ConsoleUtil
             {
                 Console.WriteLine($"{m.Number} - {m.Title}");
             }
+        }
+
+        private static async Task PopulateSince()
+        {
+            var storageAccount = SharedUtil.CreateStorageAccount();
+            var client = SharedUtil.CreateGitHubClient();
+
+            var populator = new StoragePopulator(client, storageAccount.CreateCloudTableClient());
+            await populator.PopulateIssuesSince(
+                new RoachRepoId("dotnet", "roslyn"),
+                DateTimeOffset.UtcNow.AddDays(-7));
+
         }
 
         private static async Task DumpHooks(GitHubClient client)
