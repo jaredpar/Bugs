@@ -17,6 +17,7 @@
         var dataTable = google.visualization.arrayToDataTable(data);
         var options = {
             title: elem.dataset.title,
+            pieSliceText: 'value',
         };
 
         var chart = new google.visualization.PieChart(elem);
