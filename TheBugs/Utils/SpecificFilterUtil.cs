@@ -62,6 +62,7 @@ namespace TheBugs.Utils
                 {
                     case "pilchie":
                     case "brettfo":
+                    case "cbo425":
                     case "cyrusnajmabadi":
                     case "dpoeschl":
                     case "jasonmalinowski":
