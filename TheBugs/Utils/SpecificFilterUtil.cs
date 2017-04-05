@@ -61,15 +61,15 @@ namespace TheBugs.Utils
                 switch (issue.Assignee.ToLower())
                 {
                     case "pilchie":
-                    case "balajikris":
                     case "brettfo":
                     case "cyrusnajmabadi":
                     case "dpoeschl":
-                    case "dustincampbell":
                     case "jasonmalinowski":
-                    case "jmarolf":
+                    case "kevinransom":
                     case "rchande":
-                    case "tmeschter":
+                    case "sharwell":
+                    case "dustincampbell":
+                    case "kuhlenh":
                         return true;
                     default:
                         return false;
