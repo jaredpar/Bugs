@@ -9,7 +9,7 @@
     var header = $"Developer,Count";
 
     var builder = new StringBuilder();
-    foreach (var group in Model.Issues.GroupBy(x => x.Assignee))
+    foreach (var group in Model.Issues.GroupBy(x => x.Assignee).OrderByDescending(g => g.Count()))
     {
         var count = group.Count();
         if (builder.Length > 0)
