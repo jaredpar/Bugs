@@ -127,7 +127,7 @@ namespace TheBugs.Utils
                     case "jaredpar":
                         issues = issues.Where(x => SpecificFilterUtil.CompilerTeam.IsIssue(x));
                         break;
-                    case "pilchie":
+                    case "me@pilchie.com":
                         issues = issues.Where(x => SpecificFilterUtil.IdeTeam.IsIssue(x));
                         break;
                 }
