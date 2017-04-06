@@ -44,19 +44,27 @@ namespace TheBugs.Storage
                 TableQuery.GenerateFilterCondition(nameof(TableEntity.PartitionKey), QueryComparisons.Equal, EntityKeyUtil.ToKey(repoId)),
                 TableOperators.And,
                 TableQuery.GenerateFilterCondition(nameof(RoachIssueEntity.Assignee), QueryComparisons.Equal, TheBugsConstants.UnassignedName));
-            var unassignedList = await AzureUtil.QueryAsync(_issueTable, new TableQuery<RoachIssueEntity>().Where(unassignedFilter), cancellationToken);
 
             var unknownMilestoneFilter = TableQuery.CombineFilters(
                 TableQuery.GenerateFilterCondition(nameof(TableEntity.PartitionKey), QueryComparisons.Equal, EntityKeyUtil.ToKey(repoId)),
                 TableOperators.And,
+                TableQuery.GenerateFilterConditionForInt(nameof(RoachIssueEntity.MilestoneNumber), QueryComparisons.NotEqual, RoachMilestoneId.UnknownNumber));
+
+            var mergedFilter = TableQuery.CombineFilters(unassignedFilter, TableOperators.And, unknownMilestoneFilter);
+
+            var unassignedList = await AzureUtil.QueryAsync(_issueTable, new TableQuery<RoachIssueEntity>().Where(mergedFilter), cancellationToken);
+
+            var noMilestoneFilter = TableQuery.CombineFilters(
+                TableQuery.GenerateFilterCondition(nameof(TableEntity.PartitionKey), QueryComparisons.Equal, EntityKeyUtil.ToKey(repoId)),
+                TableOperators.And,
                 TableQuery.GenerateFilterConditionForInt(nameof(RoachIssueEntity.MilestoneNumber), QueryComparisons.Equal, RoachMilestoneId.NoneNumber));
-            var unknownMilestoneList = await AzureUtil.QueryAsync(_issueTable, new TableQuery<RoachIssueEntity>().Where(unknownMilestoneFilter), cancellationToken);
+            var noMilestoneList = await AzureUtil.QueryAsync(_issueTable, new TableQuery<RoachIssueEntity>().Where(noMilestoneFilter), cancellationToken);
 
             var list = new List<RoachIssue>();
             var hashSet = new HashSet<int>();
-            foreach (var entity in unassignedList.Concat(unknownMilestoneList))
+            foreach (var entity in unassignedList.Concat(noMilestoneList))
             {
-                if (hashSet.Add(entity.Number) && entity.Labels.Contains(label))
+                if (hashSet.Add(entity.Number) && entity.Labels.Contains(label) && entity.IsOpen)
                 {
                     list.Add(entity.Issue);
                 }
