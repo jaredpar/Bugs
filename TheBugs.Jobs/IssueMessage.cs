@@ -14,6 +14,7 @@ namespace TheBugs.Jobs
         public int MilestoneNumber { get; set; }
         public string Assignee { get; set; }
         public string UpdatedAt { get; set; }
+        public IssueType IssueType { get; set; }
 
         /// <summary>
         /// This will have the name in the form dotnet/roslyn
@@ -23,6 +24,5 @@ namespace TheBugs.Jobs
         public string State { get; set; }
 
         public string[] Labels { get; set; }
-
     }
 }

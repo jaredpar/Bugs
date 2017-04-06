@@ -76,6 +76,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IssueType.cs" />
     <Compile Include="TheBugsConstants.cs" />
     <Compile Include="RoachIssue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

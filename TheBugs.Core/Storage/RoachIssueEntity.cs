@@ -23,7 +23,9 @@ namespace TheBugs.Storage
         public IEnumerable<string> Labels => LabelsRaw != null ? LabelsRaw.Split('#') : new string[] { };
         public RoachIssueId IssueId => new RoachIssueId(RepoId, Number);
         public DateTimeOffset? UpdatedAt => UpdatedAtDateTime == default(DateTime) ? (DateTimeOffset?)null : UpdatedAtDateTime;
-        public RoachIssue Issue => new RoachIssue(IssueId, Assignee ?? TheBugsConstants.UnassignedName, MilestoneId, Title, IsOpen, Labels, UpdatedAt);
+        public RoachIssue Issue => new RoachIssue(IssueId, Assignee ?? TheBugsConstants.UnassignedName, MilestoneId, Title, IsOpen, Labels, UpdatedAt, IssueType);
+
+        public IssueType IssueType { get; set; }
 
         public RoachIssueEntity()
         {
@@ -42,6 +44,7 @@ namespace TheBugs.Storage
             IsOpen = issue.IsOpen;
             LabelsRaw = string.Join("#", issue.Labels);
             UpdatedAtDateTime = (issue.UpdatedAt ?? default(DateTimeOffset)).UtcDateTime;
+            IssueType = issue.IssueType;
         }
 
         public static string GetPartitionKey(RoachRepoId repoId) => EntityKeyUtil.ToKey(repoId);

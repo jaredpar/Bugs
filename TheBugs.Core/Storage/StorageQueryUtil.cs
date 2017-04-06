@@ -56,7 +56,7 @@ namespace TheBugs.Storage
             var hashSet = new HashSet<int>();
             foreach (var entity in unassignedList.Concat(unknownMilestoneList))
             {
-                if (hashSet.Add(entity.Number) && entity.Labels.Contains(label))
+                if (hashSet.Add(entity.Number) && entity.Labels.Contains(label) && entity.IssueType == IssueType.Issue)
                 {
                     list.Add(entity.Issue);
                 }
