@@ -10,6 +10,7 @@ namespace TheBugs
     public struct RoachMilestoneId : IEquatable<RoachMilestoneId>
     {
         public const int NoneNumber = 0;
+        public const int UnknownNumber = 2;
 
         public RoachRepoId RepoId { get; }
         public int Number { get; }
