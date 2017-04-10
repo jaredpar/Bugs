@@ -23,7 +23,9 @@ namespace TheBugs
         public string UriString => $"https://github.com/{RepoId.Owner}/{RepoId.Name}/issues/{Number}";
         public Uri Url => new Uri(UriString);
 
-        public RoachIssue(RoachIssueId id, string assignee, RoachMilestoneId milestoneId, string title, bool isOpen, IEnumerable<string> labels, DateTimeOffset? updatedAt)
+        public IssueType IssueType { get; }
+
+        public RoachIssue(RoachIssueId id, string assignee, RoachMilestoneId milestoneId, string title, bool isOpen, IEnumerable<string> labels, DateTimeOffset? updatedAt, IssueType issueType)
         {
             Id = id;
             Assignee = assignee;
@@ -32,6 +34,7 @@ namespace TheBugs
             IsOpen = isOpen;
             Labels = labels.ToImmutableArray();
             UpdatedAt = updatedAt;
+            IssueType = issueType;
         }
 
         public RoachIssue(RoachRepoId repoId, Issue issue) : this(
@@ -41,7 +44,8 @@ namespace TheBugs
             issue.Title, 
             issue.State == ItemState.Open, 
             issue.Labels.Select(x => x.Name).ToImmutableArray(),
-            issue.UpdatedAt)
+            issue.UpdatedAt,
+            issue.PullRequest == null ? IssueType.Issue : IssueType.PullRequest)
         {
 
         }

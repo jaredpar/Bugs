@@ -97,7 +97,7 @@ namespace ConsoleUtil
             var populator = new StoragePopulator(client, storageAccount.CreateCloudTableClient());
             await populator.PopulateIssuesSince(
                 new RoachRepoId("dotnet", "roslyn"),
-                DateTimeOffset.UtcNow.AddDays(-7));
+                new DateTimeOffset(year: 2015, month: 1, day: 1, hour: 0, minute: 0, second: 0, offset: TimeSpan.Zero));
 
         }
 

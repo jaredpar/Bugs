@@ -5,6 +5,8 @@
     <thead>
         <tr>
             <th>Number</th>
+            <th>Milestone</th>
+            <th>Assigned To</th>
             <th>Title</th>
         </tr>
     </thead>
@@ -13,6 +15,8 @@
         {
             <tr>
                 <td><a href="@issue.Url">@issue.Number</a></td>
+                <td>@issue.MilestoneId.Number</td>
+                <td>@issue.Assignee</td>
                 <td>@issue.Title</td>
             </tr>
         }
